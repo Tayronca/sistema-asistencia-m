@@ -1,9 +1,22 @@
-<div class="media" *ngIf="authService.userData as user">
-    <div class="media-body">
-        <h1>Hello: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></h1>
-        <p>User ID: <strong>{{user.uid}}</strong></p>
-        <p>Email: <strong>{{user.email}}</strong></p>
-        <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
+<div class="body">
+    <div class="panel">
+        <div class="data-user" *ngIf="authService.userData as user">
+            <h4>{{(user.displayName) ? user.displayName : 'User'}}</h4>
+            <p>{{user.email}}</p>
+        </div>
+        <ul class="sub-menu">
+            <li>Usuarios</li>
+            <li>Docentes</li>
+            <li>Fichas Zoom</li>
+            <li>Matriz de Asistencia</li>
+            <li>Documentos generados</li>
+        </ul>
+        
         <button class="btn btn-sesion" (click)="authService.SignOut()">Cerrar Session</button>
     </div>
+
+    <div class="sub-body">
+        <router-outlet></router-outlet>
+    </div>
 </div>
+

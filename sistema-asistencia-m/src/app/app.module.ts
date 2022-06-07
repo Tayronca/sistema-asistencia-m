@@ -17,13 +17,15 @@ import { environment } from '../environments/environment';
 import { AuthService } from "./shared/services/auth.service";
 import { AdminComponent } from './admin/admin.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { UsersComponent } from './admin/users/users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AdminComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

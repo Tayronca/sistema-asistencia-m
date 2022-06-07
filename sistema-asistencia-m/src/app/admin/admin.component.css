@@ -1,0 +1,41 @@
+
+
+.body{
+    display: flex;
+}
+
+.panel{
+    width: 250px;
+    padding: 10px;
+    background: #002858;
+    height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.sub-menu{
+    height: 50%;
+}
+
+.sub-menu li{
+    margin: 5px 0;
+    font-weight: 300;
+    border-bottom: 1px solid #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    
+}
+
+.sub-menu li:hover{
+    background: rgba(255, 255, 255, 0.255);
+}
+
+.sub-body{
+    padding: 20px;
+    width: 100%;
+    overflow-y: scroll;
+}
+

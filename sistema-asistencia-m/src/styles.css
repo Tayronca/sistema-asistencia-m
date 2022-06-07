@@ -7,8 +7,20 @@
     margin: 0;
     padding: 0;
 }
+
+
 body{
     font-family: 'Verdana', sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.flex{
+    display: flex;
+}
+
+ul{
+    list-style: none;
 }
 
 .input-group{
@@ -51,4 +63,39 @@ input:focus{
 
 .btn-sesion:hover{
     opacity: 0.8;
+}
+
+
+
+.sub-menu-horizontal{
+    background: #002858;
+    color: #fff;
+}
+
+.sub-menu-horizontal li{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sub-menu-horizontal li:hover{
+    color: #f6d70e;
+}
+
+
+.table{
+    border-collapse: collapse;
+}
+
+
+.table th,td{
+    padding: 10px;
+    text-align: left;
+}
+
+.table thead{
+    background: #f6d70e;
+    border: 3px;
+}
+.table tbody tr:nth-child(2n){
+    background: #eee;
 }
