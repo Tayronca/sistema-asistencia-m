@@ -1,1 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "Verdana";
+    src: local("Verdana"), url(./assets/font/verdana.ttf) format("truetype");
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'Verdana', sans-serif;
+}
+
+.input-group{
+    padding: 10px;
+}
+
+.input-group h4{
+    font-size: 13px;
+}
+
+.input-group input{
+    background: none;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 5px 10px;
+    margin: 10px 0 ;
+}
+
+input:focus{
+    outline: none;
+}
+
+
+.btn{
+    border: none;
+    padding: 5px 10px ;
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 3px;
+    cursor: pointer;
+    
+}
+
+
+
+.btn-sesion{
+    background: #002858;
+    color: #fff;
+}
+
+.btn-sesion:hover{
+    opacity: 0.8;
+}

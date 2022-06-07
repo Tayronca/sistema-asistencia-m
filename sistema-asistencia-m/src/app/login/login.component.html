@@ -1,0 +1,18 @@
+<div class="body-login">
+    <img src="../../assets/img/logo.png" class="img-login">
+    <h3>Iniciar Sesión</h3>
+    <div class="c-form-login">
+        <div class="input-group">
+            <h4>Usuario</h4>
+            <input type="text" placeholder="tayronca@unibe.edu.ec" #userName required>
+        </div>
+        <div class="input-group">
+            <h4>Contraseña</h4>
+            <input type="password" placeholder="*******" #userPassword required>
+        </div>
+        <div class="c-button">
+            <button class="btn btn-sesion" (click)="authService.SignIn(userName.value, userPassword.value)">Login Session</button>
+        </div>
+    </div> 
+
+</div>
