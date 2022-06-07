@@ -25,9 +25,13 @@ export class AuthService {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user')!);
+        this.router.navigate(['admin'])
+
+
       } else {
         localStorage.setItem('user', 'null');
         JSON.parse(localStorage.getItem('user')!);
+        this.router.navigate(['login'])
       }
     });
   }
@@ -81,8 +85,6 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
-
-    console.log(user)
     return user !== null && user.emailVerified !== false ? true : false;
   }
 
