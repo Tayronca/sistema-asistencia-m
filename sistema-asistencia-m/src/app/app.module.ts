@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,8 @@ import { AuthService } from "./shared/services/auth.service";
 import { AdminComponent } from './admin/admin.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { UsersComponent } from './admin/users/users.component';
+import { AllComponent } from './admin/users/all/all.component';
+import { NewUserComponent } from './admin/users/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { UsersComponent } from './admin/users/users.component';
     LoginComponent,
     AdminComponent,
     VerifyEmailComponent,
-    UsersComponent
+    UsersComponent,
+    NewUserComponent,
+    AllComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,8 @@ import { UsersComponent } from './admin/users/users.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    AngularFireDatabaseModule,    
+    FormsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

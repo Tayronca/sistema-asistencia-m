@@ -1,0 +1,46 @@
+<div class="input-group">
+    <h4>Rol</h4>
+    <select name="" id="">
+        <option value="superusuario">Super Usuario</option>
+        <option value="proveedor">Proveedor</option>
+        <option value="administrativo">Administrativo</option>
+        <option value="cotrolador">Controlador</option>
+    </select>
+</div>
+<div class="form flex">
+    <div class="column-50">
+        <div class="input-group">
+            <h4>Nombres</h4>
+            <input type="text" placeholder="Tayron Jampier">
+        </div>
+        <div class="input-group">
+            <h4>Cedula</h4>
+            <input type="text" placeholder="1550153793">
+        </div>
+        <div class="input-group">
+            <h4>Correo</h4>
+            <input type="text" placeholder="ghcasco@gmail.com">
+        </div>
+
+    </div>
+    <div class="column-50">
+        <div class="input-group">
+            <h4>Apellidos</h4>
+            <input type="text" placeholder="Casco Acurio">
+        </div>
+        <div class="input-group">
+            <h4>Password</h4>
+            <div class="flex">
+                <input [(ngModel)]="password" type="{{show?'password':'text'}}"> <button class="btn-input" (click)="showPassword()">Show</button>
+                <button class="btn-input" (click)="generarPassword()">Generar</button>
+            </div>
+           
+        </div>
+        <div class="input-group flex flex-end">
+            <button class="btn btn-confirm">Ingresar</button>
+        </div>
+        
+    </div>
+    
+
+</div>
