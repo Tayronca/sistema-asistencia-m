@@ -24,7 +24,7 @@ export class AuthService {
     this.afAuth.authState.subscribe(async (user) => {
 
       if (user) {
-         this.userData = await this.getDataUser(user.uid);
+         this.userData = await this.getDataUser(user);
 
          if(this.userData){
           await localStorage.setItem('user', JSON.stringify(this.userData));
@@ -51,7 +51,7 @@ export class AuthService {
 
         if(user){
           
-           this.getDataUser(user.uid)
+           this.getDataUser(user)
 
         }
 
@@ -63,20 +63,7 @@ export class AuthService {
         window.alert(error.message);
       });
   }
-  // Sign up with email/password
-  SignUp(email: string, password: string) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
-        this.SendVerificationMail();
-        this.SetUserData(result.user);
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
-  }
+
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
     return this.afAuth.currentUser
@@ -103,24 +90,7 @@ export class AuthService {
      return user !== null && user.emailVerified !== false ? true : false;
   }
 
-  // Auth logic to run auth providers
-  AuthLogin(provider: any) {
-    return this.afAuth
-      .signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['admin']);
-        });
-        this.SetUserData(result.user);
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
-  }
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: any) {
+  SetUserData(user: any,singUser:any) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
@@ -128,13 +98,13 @@ export class AuthService {
 
     const userData: User = {
       uid: user.uid,
-      correo: user.email,
+      correo: user.correo,
       nombres: user.nombres,
       apellidos: user.apellidos,
       cedula: user.cedula,
       rol: user.rol,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      emailVerified: singUser.emailVerified
     };
     return userRef.set(userData, {
       merge: true,
@@ -149,10 +119,10 @@ export class AuthService {
   }
 
 
-  async getDataUser(uid:string){
+  async getDataUser(u:any){
 
    
-    var data = this.afs.firestore.collection('users').doc(uid).get()
+    var data = this.afs.firestore.collection('users').doc(u.uid).get()
 
 
 
@@ -166,7 +136,7 @@ export class AuthService {
               return null
           })
 
-    await this.SetUserData(user);
+    await this.SetUserData(user,u);
 
     return user
 

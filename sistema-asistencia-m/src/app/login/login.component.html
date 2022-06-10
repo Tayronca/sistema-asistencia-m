@@ -2,6 +2,11 @@
     <img src="../../assets/img/logo.png" class="img-login">
     <h3>Iniciar Sesión</h3>
     <div class="c-form-login">
+       
+        <div *ngIf="authService.userData">
+            <p class="error" *ngIf="!authService.userData.emailVerified">Correo Sin Verificar</p>
+        </div>
+        
         <div class="input-group">
             <h4>Usuario</h4>
             <input type="text" placeholder="tayronca@unibe.edu.ec" #userName required>

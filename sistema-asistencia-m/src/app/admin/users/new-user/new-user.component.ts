@@ -58,7 +58,8 @@ export class NewUserComponent implements OnInit {
 
           if(result.user){
 
-            
+              result.user.sendEmailVerification();
+              
               var user ={
                 rol:this.rol,
                 nombres:this.nombres,
