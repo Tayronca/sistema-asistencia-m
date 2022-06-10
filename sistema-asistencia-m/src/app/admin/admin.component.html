@@ -1,8 +1,10 @@
 <div class="body">
     <div class="panel">
         <div class="data-user" *ngIf="authService.userData as user">
-            <h4>{{(user.displayName) ? user.displayName : 'User'}}</h4>
+            <h4>{{user.nombres? user.nombres.split(' ')[0]:''}} {{user.apellidos? user.apellidos.split(' ')[0]:''}}</h4>
             <p>{{user.email}}</p>
+            <p>{{user.cedula}}</p>
+            <p>{{user.rol == 'superusuario'? 'Super Usuario':''}}</p>
         </div>
         <ul class="sub-menu">
             <li [routerLink]="['/admin/users']">Usuarios</li>
