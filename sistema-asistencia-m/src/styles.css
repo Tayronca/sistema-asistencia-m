@@ -139,3 +139,7 @@ input:focus{
     width: 50%;
     padding: 10px;
 }
+
+.error{
+    color: red;
+}

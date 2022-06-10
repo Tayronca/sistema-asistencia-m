@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-new-user',
@@ -7,10 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewUserComponent implements OnInit {
 
+  rol:string = 'superusuario';
+  nombres:string = '';
+  apellidos:string = '';
+  cedula:string = '';
+  correo:string = '';
   password:string= "";
   show:boolean= false;
+  valid:boolean = true;
 
-  constructor() { }
+  constructor(
+    private firestore:AngularFirestore,
+    private auth:AngularFireAuth
+  ) { 
+   
+  }
 
   ngOnInit(): void {
   }
@@ -30,6 +43,55 @@ export class NewUserComponent implements OnInit {
   showPassword(){
 
     this.show = !this.show;
+
+
+  }
+
+  saveUser(){
+
+    const{rol,nombres,apellidos,cedula,correo,password} = this
+    if(rol && nombres&&apellidos&&cedula&&correo&&password){
+      this.valid = true
+      const auth = this.auth;
+
+      auth.createUserWithEmailAndPassword(correo,password).then(result=>{
+
+          if(result.user){
+
+            
+              var user ={
+                rol:this.rol,
+                nombres:this.nombres,
+                apellidos:this.apellidos,
+                cedula:this.cedula,
+                correo:this.correo,
+                emailVerified:false,
+                uid:result.user.uid,
+                photoURL:''
+              }
+          
+              this.firestore.collection('users').doc(user.uid).set(user).then(e=>{
+
+                this.clearInput()
+              })
+
+          }
+
+      })
+
+     
+    }else{
+
+      this.valid = false
+    }
+  }
+
+  clearInput(){
+    this.password = ''
+    this.nombres = ''
+    this.apellidos = ''
+    this.correo = ''
+    this.cedula = ''
   }
  
 

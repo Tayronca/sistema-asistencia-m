@@ -7,6 +7,7 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,16 +21,20 @@ export class AuthService {
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
-    this.afAuth.authState.subscribe((user) => {
+    this.afAuth.authState.subscribe(async (user) => {
+
       if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
+         this.userData = await this.getDataUser(user.uid);
+
+         if(this.userData){
+          await localStorage.setItem('user', JSON.stringify(this.userData));
+          await JSON.parse(localStorage.getItem('user')!);
+          await this.router.navigate(['admin']);
+         }
 
       } else {
         localStorage.setItem('user', 'null');
         JSON.parse(localStorage.getItem('user')!);
-        this.router.navigate(['login'])
       }
     });
   }
@@ -37,11 +42,22 @@ export class AuthService {
   SignIn(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then( (result) => {
         this.ngZone.run(() => {
           this.router.navigate(['admin']);
         });
-        this.SetUserData(result.user);
+
+        var user = result.user
+
+        if(user){
+          
+           this.getDataUser(user.uid)
+
+        }
+
+       
+
+       
       })
       .catch((error) => {
         window.alert(error.message);
@@ -83,7 +99,8 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
-    return user !== null && user.emailVerified !== false ? true : false;
+
+     return user !== null && user.emailVerified !== false ? true : false;
   }
 
   // Auth logic to run auth providers
@@ -107,12 +124,17 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
+
+
     const userData: User = {
       uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      correo: user.email,
+      nombres: user.nombres,
+      apellidos: user.apellidos,
+      cedula: user.cedula,
+      rol: user.rol,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
+      emailVerified: user.emailVerified
     };
     return userRef.set(userData, {
       merge: true,
@@ -124,6 +146,30 @@ export class AuthService {
       localStorage.removeItem('user');
       this.router.navigate(['login']);
     });
+  }
+
+
+  async getDataUser(uid:string){
+
+   
+    var data = this.afs.firestore.collection('users').doc(uid).get()
+
+
+
+   const user= await data.then(e=>{
+              if(e.exists){
+
+              
+
+                return e.data()
+              }
+              return null
+          })
+
+    await this.SetUserData(user);
+
+    return user
+
   }
 
   

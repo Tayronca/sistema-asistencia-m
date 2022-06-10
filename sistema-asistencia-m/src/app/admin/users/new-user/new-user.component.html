@@ -1,6 +1,6 @@
 <div class="input-group">
     <h4>Rol</h4>
-    <select name="" id="">
+    <select name="" id="" [(ngModel)]="rol">
         <option value="superusuario">Super Usuario</option>
         <option value="proveedor">Proveedor</option>
         <option value="administrativo">Administrativo</option>
@@ -10,34 +10,34 @@
 <div class="form flex">
     <div class="column-50">
         <div class="input-group">
-            <h4>Nombres</h4>
-            <input type="text" placeholder="Tayron Jampier">
+            <h4><i class="fa-solid fa-user"></i> Nombres <span *ngIf="!nombres && !valid"  class="error">*</span></h4>
+            <input type="text" placeholder="Tayron Jampier" [(ngModel)]="nombres" required>
         </div>
         <div class="input-group">
-            <h4>Cedula</h4>
-            <input type="text" placeholder="1550153793">
+            <h4>Cedula  <span *ngIf="!cedula && !valid"  class="error">*</span></h4>
+            <input type="text" placeholder="1550153793" [(ngModel)]="cedula" required>
         </div>
         <div class="input-group">
-            <h4>Correo</h4>
-            <input type="text" placeholder="ghcasco@gmail.com">
+            <h4>Correo <span *ngIf="!correo && !valid"  class="error">*</span></h4>
+            <input type="text" placeholder="ghcasco@gmail.com" [(ngModel)]="correo" required>
         </div>
 
     </div>
     <div class="column-50">
         <div class="input-group">
-            <h4>Apellidos</h4>
-            <input type="text" placeholder="Casco Acurio">
+            <h4>Apellidos <span *ngIf="!apellidos && !valid"  class="error">*</span></h4>
+            <input type="text" placeholder="Casco Acurio" [(ngModel)]="apellidos" required>
         </div>
         <div class="input-group">
-            <h4>Password</h4>
+            <h4>Password <span *ngIf="!password && !valid"  class="error">*</span></h4>
             <div class="flex">
-                <input [(ngModel)]="password" type="{{show?'password':'text'}}"> <button class="btn-input" (click)="showPassword()">Show</button>
+                <input [(ngModel)]="password" type="{{!show?'password':'text'}}" required> <button class="btn-input" (click)="showPassword()">Show</button>
                 <button class="btn-input" (click)="generarPassword()">Generar</button>
             </div>
            
         </div>
         <div class="input-group flex flex-end">
-            <button class="btn btn-confirm">Ingresar</button>
+            <button class="btn btn-confirm" (click)="saveUser()">Ingresar</button>
         </div>
         
     </div>
