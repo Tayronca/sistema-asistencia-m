@@ -19,40 +19,36 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
   ) {
-    /* Saving user data in localstorage when 
-    logged in and setting up null when logged out */
-    this.afAuth.authState.subscribe(async (user) => {
 
-      if (user) {
-         this.userData = await this.getDataUser(user);
 
-         if(this.userData){
-          await localStorage.setItem('user', JSON.stringify(this.userData));
-          await JSON.parse(localStorage.getItem('user')!);
-          await this.router.navigate(['admin']);
-         }
+    this.afAuth.authState.forEach(async user=>{
+    
 
-      } else {
-        localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
+      if(user){
+        this.userData = await JSON.parse(localStorage.getItem('user')!);
+
+          if(!this.router.url.includes('admin')){
+            await this.router.navigate(['admin']);
+          }
+            
+        
       }
-    });
+    })
+
   }
   // Sign in with email/password
   SignIn(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
-      .then( (result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['admin']);
-        });
-
+      .then( async (result) => {
         var user = result.user
 
         if(user){
-          
-           this.getDataUser(user)
 
+          this.userData = await this.getDataUser(user);
+          await localStorage.setItem('user', JSON.stringify(this.userData));
+          await JSON.parse(localStorage.getItem('user')!);
+          await this.router.navigate(['admin']);
         }
 
        
@@ -64,14 +60,7 @@ export class AuthService {
       });
   }
 
-  // Send email verfificaiton when new user sign up
-  SendVerificationMail() {
-    return this.afAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        this.router.navigate(['verify-email-address']);
-      });
-  }
+
   // Reset Forggot password
   ForgotPassword(passwordResetEmail: string) {
     return this.afAuth

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -17,20 +19,30 @@ import { environment } from '../environments/environment';
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
 import { AdminComponent } from './admin/admin.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { UsersComponent } from './admin/users/users.component';
 import { AllComponent } from './admin/users/all/all.component';
+import { AllComponent as AllDocentes } from './admin/docentes/all/all.component';
+import { EditComponent as EditDocentes } from './admin/docentes/edit/edit.component';
 import { NewUserComponent } from './admin/users/new-user/new-user.component';
+import { EditComponent } from './admin/users/edit/edit.component';
+import { DocentesComponent } from './admin/docentes/docentes.component';
+import { NewComponent } from './admin/docentes/new/new.component';
+import { ZoomComponent } from './admin/zoom/zoom.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AdminComponent,
-    VerifyEmailComponent,
     UsersComponent,
     NewUserComponent,
     AllComponent,
+    EditComponent,
+    DocentesComponent,
+    NewComponent,
+    AllDocentes,
+    EditDocentes,
+    ZoomComponent
   ],
   imports: [
     BrowserModule,

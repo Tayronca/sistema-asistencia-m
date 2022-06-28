@@ -1,0 +1,45 @@
+<div class="input-group">
+    <h4>FACULTAD</h4>
+    <select  [(ngModel)]="Docente.Facultad" >
+        <option *ngFor="let x of Facultades" [value]="x.Codigo">{{x.Nombre}}</option>
+    </select>
+</div>
+
+
+<div class="flex">
+    <div class="input-group column-50">
+        <h4>Cedula  <span *ngIf="!Docente.Cedula && !valid"  class="error">*</span></h4>
+        <input type="text" placeholder="1550153793" [(ngModel)]="Docente.Cedula" required>
+    </div>
+    <div class="input-group column-50">
+        <h4><i class="fa-solid fa-user"></i> Nombres <span *ngIf="!Docente.Nombres && !valid"  class="error">*</span></h4>
+        <input type="text" placeholder="Tayron Jampier" [(ngModel)]="Docente.Nombres" required>
+    </div>
+</div>
+<div class="flex">
+    <div class="input-group column-50">
+        <h4>Apellidos <span *ngIf="!Docente.Apellidos && !valid"  class="error">*</span></h4>
+        <input type="text" placeholder="Casco Acurio" [(ngModel)]="Docente.Apellidos" required>
+    </div>
+    <div class="input-group column-50">
+        <h4>Correo <span *ngIf="!Docente.Correo && !valid"  class="error">*</span></h4>
+        <input type="text" placeholder="tayron.casco@gmail.com" [(ngModel)]="Docente.Correo" required>
+    </div>
+</div>
+<div class="flex">
+    <div class="input-group column-50">
+        <h4>Teléfono <span *ngIf="!Docente.Telefono && !valid"  class="error">*</span></h4>
+        <input type="text" placeholder="+593 978 565 985" [(ngModel)]="Docente.Telefono" required>
+    </div>
+    <div class="input-group column-50">
+        <h4>Título <span *ngIf="!Docente.Titulo && !valid"  class="error">*</span></h4>
+        <input type="text" placeholder="Ing. Electronico" [(ngModel)]="Docente.Titulo" required>
+    </div>
+</div>
+<div class="input-group flex flex-end">
+    <button class="btn btn-confirm" (click)="save()">Ingresar</button>
+</div>
+
+
+
+

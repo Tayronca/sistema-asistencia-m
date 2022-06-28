@@ -1,0 +1,30 @@
+
+    <div class="container-users">
+        <table class="table" *ngIf="docentes.length>0 && Facultades.length>0" >
+            <thead>
+                <tr>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Titulo</th>
+                    <th>Facultad</th>
+                    <th>Correo</th>
+                    <th>Telefono</th>
+                    <th>Eliminar</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of docentes; let index = index">
+                    <td>{{x.Cedula}}</td>
+                    <td>{{x.Nombres}} {{x.Apellidos}}</td>
+                    <td>{{x.Titulo}}</td>
+                    <td>{{getFacultad(x.Facultad)}}</td>
+                    <td>{{x.Correo}}</td>
+                    <td>{{x.Telefono}}</td>
+                    <td><i class="fa-solid fa-trash-can icon-delete" (click)="delete(x.IdDocente)"></i></td>
+                    <td><i class="fa-solid fa-pen-to-square icon-edit" (click)="edit(x.IdDocente)"></i></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>

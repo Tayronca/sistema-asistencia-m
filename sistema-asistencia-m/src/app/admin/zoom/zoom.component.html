@@ -1,0 +1,37 @@
+
+<div class="input-group">
+    <label for="file" class="btn-file"><i class="fa-solid fa-cloud-arrow-up"></i> Subir Ficha Zoom Excel</label>
+    <input type="file"
+           id="file"
+           accept=".xls, .xlsx"
+           (change)="fileInput($event)">
+</div>
+<br>
+<table class="table" *ngIf="datosExcel.length>0">
+    <thead>
+        <tr>
+            <th>Cedula</th>
+            <th>Tema</th>
+            <th>Nombre de Usuario</th>
+            <th>E-mail del Usuario</th>
+            <th>Hora de Inicio</th>
+            <th>Hora de Finalización</th>
+            <th>Duración (Minutos)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let x of datosExcel; let index = index" >
+            <td>{{x.Cedula}}</td>
+            <td>{{x.Tema}}</td>
+            <td>{{x.Nombre}}</td>
+            <td>{{x.Correo}}</td>
+            <td>{{dateFormat(x.HoraInicio)}}</td>
+            <td>{{dateFormat(x.HoraFin)}}</td>
+            <td>{{x.Duracion}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="datosExcel.length>0" class="input-group flex flex-end">
+    <button class="btn btn-confirm" (click)="save()">Guardar Fichas</button>
+</div>

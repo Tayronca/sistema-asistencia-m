@@ -143,3 +143,38 @@ input:focus{
 .error{
     color: red;
 }
+
+.btn-link{
+    border: none;
+    background: none;
+    color: #002858;
+    cursor: pointer;
+}
+
+.icon-delete{
+    color: red;
+    cursor: pointer;
+}
+
+.icon-edit{
+    color: #dabd00;
+    cursor: pointer;
+}
+
+
+input[type='file']{
+    display: none;
+}
+
+.btn-file{
+    background: #0a6de6;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-file:hover{
+    opacity: 0.8;
+}

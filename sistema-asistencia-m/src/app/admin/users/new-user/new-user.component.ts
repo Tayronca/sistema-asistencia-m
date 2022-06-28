@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -20,7 +22,8 @@ export class NewUserComponent implements OnInit {
 
   constructor(
     private firestore:AngularFirestore,
-    private auth:AngularFireAuth
+    private auth:AngularFireAuth,
+    private router:Router
   ) { 
    
   }
@@ -74,6 +77,8 @@ export class NewUserComponent implements OnInit {
               this.firestore.collection('users').doc(user.uid).set(user).then(e=>{
 
                 this.clearInput()
+
+                this.router.navigate(['admin/users'])
               })
 
           }
