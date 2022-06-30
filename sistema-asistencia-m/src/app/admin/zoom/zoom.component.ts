@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as XLSX from "xlsx";
 import { Docente } from '../docentes/Docente';
@@ -12,8 +12,17 @@ import * as moment from 'moment';
   styleUrls: ['./zoom.component.css']
 })
 export class ZoomComponent implements OnInit {
-  
+  show:boolean =false
+  Titulo:string = ''
+  Descripcion:string = ''
+
+  @ViewChild('file') file: any;
+  fileName:string=''
+
+
   datosExcel:Array<zoom>=[]
+
+  fichas:Array<zoom>=[]
 
  
 
@@ -23,17 +32,26 @@ export class ZoomComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.getFichas()
   }
+
+ 
 
   fileInput(ev:any):void {
 
     this.datosExcel =[]
     if(ev){
+      
+
+      this.file =null
 
       let workBook:any = null;
       let jsonData = null;
       const reader = new FileReader();
-      const file = ev.target.files[0];
+      this.file = ev.target.files[0];
+      this.fileName = ev.target.files[0].name
+
       reader.onload = (event) => {
         const data = reader.result;
         workBook = XLSX.read(data, { type: 'binary' });
@@ -63,14 +81,15 @@ export class ZoomComponent implements OnInit {
      
             this.setData(clase)
            
-            
+              ev.target.value =null
+              
           }
      
           return initial;
         }, {});
 
       }
-      reader.readAsBinaryString(file);
+      reader.readAsBinaryString(this.file);
 
       
     }
@@ -114,6 +133,8 @@ export class ZoomComponent implements OnInit {
   
 
      await this.datosExcel.push(clase)
+
+    
   }
 
   dateFormat(date:Date){
@@ -126,22 +147,78 @@ export class ZoomComponent implements OnInit {
       var count = 0;
 
       await this.datosExcel.map(async row=>{
-        await this.db.firestore.collection('zoom').doc().set(row).catch(err=>console.log())
+
+        var exist =await  this.db.firestore.collection('zoom').where('IdDocente','==',row.IdDocente).where('HoraInicio','==',row.HoraInicio).get().then(doc=>{
+
+          if(doc.docs.length>0){
+
+            return true
+          }
+
+          return false
+        })
+
+   
         count ++;
+        if(!exist){
+          
+          await this.db.firestore.collection('zoom').doc().set(row).catch(err=>console.log())
+      
 
-        console.log(count,this.datosExcel.length)
 
-        if(count == this.datosExcel.length){
-  
-          this.datosExcel =[]
-  
-              alert('ingresados')
+            if(count == this.datosExcel.length){
+      
+              this.datosExcel =[]
+      
+                  console.log('Ingresado')
+            }
+        }else{
+
+              this.Titulo ='Ups! Ya existe una documento con la misma fecha y hora ingresada!'
+           
+              this.Descripcion += row.Cedula +" " + row.Nombre + " "+row.HoraInicio + "-" + row.HoraFin + "<br>"
+            
         }
 
+
+
+         
       })
 
+      this.datosExcel = await []
+
+      this.file =null
+      this.fileName = ''
+
+    
+  
+      this.show = true
+
+
+      await this.getFichas()
     
    
+  }
+
+
+  close(){
+      this.show = false
+      this.Titulo =''
+      this.Descripcion = ''
+  }
+
+ async getFichas(){
+
+  this.fichas = []
+
+      await this.db.firestore.collection('zoom').get().then(e=>{
+
+        if(e.docs.length>0){
+          e.docs.map(doc=>{
+            this.fichas.push(doc.data() as zoom)
+          })
+        }
+      })
   }
 
 }

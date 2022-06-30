@@ -28,6 +28,7 @@ import { EditComponent } from './admin/users/edit/edit.component';
 import { DocentesComponent } from './admin/docentes/docentes.component';
 import { NewComponent } from './admin/docentes/new/new.component';
 import { ZoomComponent } from './admin/zoom/zoom.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ZoomComponent } from './admin/zoom/zoom.component';
     NewComponent,
     AllDocentes,
     EditDocentes,
-    ZoomComponent
+    ZoomComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

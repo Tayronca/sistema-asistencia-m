@@ -178,3 +178,27 @@ input[type='file']{
 .btn-file:hover{
     opacity: 0.8;
 }
+
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #002858c1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-alert{
+    border: 1px solid #eee;
+    background: #fff;
+    padding: 20px;
+}
+
+thead.color-head2{
+    background: #002858;
+    color: #fff;
+}
