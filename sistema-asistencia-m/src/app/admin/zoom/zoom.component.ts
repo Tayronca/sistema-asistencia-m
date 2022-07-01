@@ -16,6 +16,8 @@ export class ZoomComponent implements OnInit {
   Titulo:string = ''
   Descripcion:string = ''
 
+  searchName:string=''
+
   @ViewChild('file') file: any;
   fileName:string=''
 
@@ -24,7 +26,8 @@ export class ZoomComponent implements OnInit {
 
   fichas:Array<zoom>=[]
 
- 
+ fechaInicio:string=''
+ fechaFin:string =''
 
   constructor(
     private db:AngularFirestore,
@@ -34,6 +37,9 @@ export class ZoomComponent implements OnInit {
   ngOnInit(): void {
 
     this.getFichas()
+
+    this.fechaInicio =moment(new Date()).format('yyyy-MM-DD')
+    this.fechaFin =moment(new Date()).format('yyyy-MM-DD')
   }
 
  
@@ -116,6 +122,8 @@ export class ZoomComponent implements OnInit {
        console.log(err)
      })
 
+ 
+
      if(docente){
 
         if(clase.Correo == docente.Correo)
@@ -137,8 +145,9 @@ export class ZoomComponent implements OnInit {
     
   }
 
-  dateFormat(date:Date){
+  dateFormat(date:any){
 
+ 
     return moment(date).format('DD/MM/yyyy HH:mm:ss')
   }
 
@@ -170,7 +179,6 @@ export class ZoomComponent implements OnInit {
       
               this.datosExcel =[]
       
-                  console.log('Ingresado')
             }
         }else{
 
@@ -181,7 +189,7 @@ export class ZoomComponent implements OnInit {
         }
 
 
-
+   
          
       })
 
@@ -211,14 +219,91 @@ export class ZoomComponent implements OnInit {
 
   this.fichas = []
 
-      await this.db.firestore.collection('zoom').get().then(e=>{
+      await this.db.firestore.collection('zoom').orderBy('HoraInicio','desc').limit(100).get().then(e=>{
 
         if(e.docs.length>0){
           e.docs.map(doc=>{
-            this.fichas.push(doc.data() as zoom)
+              var data = doc.data() as any
+            var ficha={
+              ...data,
+                HoraInicio:data.HoraInicio.toDate(),
+                HoraFin:data.HoraFin.toDate()
+            }
+            this.fichas.push(ficha as zoom)
           })
         }
       })
   }
+
+
+ async  filterName(e:any){
+
+      var name = e.target.value.toUpperCase()
+      await this.getFichas()
+
+      var consulta:Array<zoom> = []
+
+      if(this.fichas.length>0 && name!=''){
+          this.fichas.map(a=>{
+              var zoom = a as any
+
+            if(zoom.Nombre.toUpperCase().includes(name) ){
+                consulta.push(a)
+            }
+          })
+
+          
+        this.fichas = consulta
+      }
+      
+      else{
+        this.getFichas()
+      }
+
+  }
+
+
+  
+    async  filterCI(e:any){
+
+      var ci = e.target.value.toUpperCase()
+      await this.getFichas()
+
+      var consulta:Array<zoom> = []
+
+      if(this.fichas.length>0){
+          this.fichas.map(e=>{
+
+            if(e.Cedula.toUpperCase().includes(ci)){
+                consulta.push(e)
+            }
+          })
+      }
+
+      this.fichas = consulta
+    }
+
+
+    async  filterRange(e:any){
+
+      var ci = e.target.value.toUpperCase()
+      await this.getFichas()
+
+      var consulta:Array<zoom> = []
+
+      if(this.fichas.length>0){
+          this.fichas.map(e=>{
+
+            var inicio = moment(e.HoraInicio).format('yyyy-MM-DD')
+            var fin = moment(e.HoraFin).format('yyyy-MM-DD')
+
+            if(inicio>=this.fechaInicio && inicio <= this.fechaFin){
+                consulta.push(e)
+            }
+          })
+      }
+
+      this.fichas = consulta
+    }
 
 }

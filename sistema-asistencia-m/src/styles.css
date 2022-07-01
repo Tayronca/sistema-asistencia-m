@@ -202,3 +202,22 @@ thead.color-head2{
     background: #002858;
     color: #fff;
 }
+
+
+.input-filter{
+    width: 250px;
+    display: flex;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    padding: 2px 5px;
+    align-items: center;
+}
+
+.input-filter input{
+    border: none;
+    margin: 0;
+}
+.filter h4{
+    margin-bottom: 10px;
+    font-size: 12px;
+}
