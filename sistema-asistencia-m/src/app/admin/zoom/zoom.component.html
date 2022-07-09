@@ -81,6 +81,7 @@
             <th>Hora de Inicio</th>
             <th>Hora de Finalización</th>
             <th>Duración (Minutos)</th>
+            <th>Eliminar</th>
         </tr>
     </thead>
     <tbody>
@@ -92,6 +93,7 @@
             <td>{{dateFormat(x.HoraInicio)}}</td>
             <td>{{dateFormat(x.HoraFin)}}</td>
             <td>{{x.Duracion}}</td>
+            <td><i class="fa-solid fa-trash-can icon-delete" (click)="alertConfirm(x.IdZoom, x.Nombre)"></i></td>
         </tr>
     </tbody>
 </table>
@@ -100,3 +102,6 @@
 
 
 <app-alert *ngIf="show" [Titulo]="Titulo" [Descripcion]="Descripcion" (Close)="close()"></app-alert>
+
+
+<app-confirm *ngIf="confirm" [Titulo]="TituloConfirm" [Descripcion]="DescripcionConfirm" [Id]="Id" (Close)="closeConfirm()" (Confirm)="confirmDelete($event)"></app-confirm>

@@ -1,4 +1,5 @@
 export interface zoom{
+    IdZoom:string,
     IdDocente:String,
     Cedula:String,
     Tema:String,

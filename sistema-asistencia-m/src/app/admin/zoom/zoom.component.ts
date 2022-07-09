@@ -29,6 +29,11 @@ export class ZoomComponent implements OnInit {
  fechaInicio:string=''
  fechaFin:string =''
 
+ confirm:boolean=false
+ TituloConfirm:string =''
+ DescripcionConfirm:string = ''
+ Id:string =''
+
   constructor(
     private db:AngularFirestore,
     
@@ -170,8 +175,17 @@ export class ZoomComponent implements OnInit {
    
         count ++;
         if(!exist){
+
+          var ref = await this.db.firestore.collection('docentes').doc()
+
+          var zoom={
+            ...row,
+            IdZoom:ref.id
+            
           
-          await this.db.firestore.collection('zoom').doc().set(row).catch(err=>console.log())
+          }
+          
+          await this.db.firestore.collection('zoom').doc(ref.id).set(zoom).catch(err=>console.log())
       
 
 
@@ -199,11 +213,12 @@ export class ZoomComponent implements OnInit {
       this.fileName = ''
 
     
-  
+      await this.getFichas()
+
       this.show = true
 
 
-      await this.getFichas()
+  
     
    
   }
@@ -213,6 +228,8 @@ export class ZoomComponent implements OnInit {
       this.show = false
       this.Titulo =''
       this.Descripcion = ''
+
+      this.getFichas()
   }
 
  async getFichas(){
@@ -305,5 +322,35 @@ export class ZoomComponent implements OnInit {
 
       this.fichas = consulta
     }
+
+
+    
+      alertConfirm(id:string,docente:any){
+        this.Id = id
+        this.TituloConfirm ='¿Está seguro de eliminar la ficha del docente '+docente +"?"
+        this.DescripcionConfirm = 'El la ficha del docente será eliminada definitivamente del sistema.'
+        this.confirm = true
+      }
+
+      confirmDelete(id:string){
+      
+        this.delete(id)
+        this.closeConfirm()
+      }
+
+      closeConfirm(){
+        this.Id = ''
+        this.TituloConfirm =''
+        this.DescripcionConfirm = ''
+        this.confirm = false
+      }
+
+    async delete(IdZoom:string){
+
+      await this.db.firestore.collection('zoom').doc(IdZoom).delete()
+
+      await  this.getFichas()
+    }
+
 
 }

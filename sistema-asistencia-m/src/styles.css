@@ -63,6 +63,11 @@ input:focus{
     width: 100%;
 }
 
+.c-buttons{
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
 
 .btn{
     border: none;
@@ -89,6 +94,15 @@ input:focus{
     background: #197b0e;
     color: #fff;
     width: 120px;
+    margin: 0 10px;
+}
+
+.btn-cancel{
+    background: red;
+    color: #fff;
+    width: 120px;
+    
+    margin: 0 10px;
 }
 
 .btn-input{

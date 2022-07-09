@@ -21,10 +21,14 @@
                     <td>{{getFacultad(x.Facultad)}}</td>
                     <td>{{x.Correo}}</td>
                     <td>{{x.Telefono}}</td>
-                    <td><i class="fa-solid fa-trash-can icon-delete" (click)="delete(x.IdDocente)"></i></td>
+                    <td><i class="fa-solid fa-trash-can icon-delete" (click)="alertConfirm(x.IdDocente, x.Nombres +' '+ x.Apellidos)"></i></td>
                     <td><i class="fa-solid fa-pen-to-square icon-edit" (click)="edit(x.IdDocente)"></i></td>
                 </tr>
 
             </tbody>
         </table>
     </div>
+
+
+    <app-confirm *ngIf="confirm" [Titulo]="Titulo" [Descripcion]="Descripcion" [Id]="Id" (Close)="close()" (Confirm)="confirmDelete($event)"></app-confirm>
+    <app-alert *ngIf="alert" [Titulo]="TituloAlert" [Descripcion]="DescripcionAlert" (Close)="closeAlert()"></app-alert>

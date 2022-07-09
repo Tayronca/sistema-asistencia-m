@@ -1,4 +1,4 @@
-import { identifierName } from '@angular/compiler';
+
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
@@ -15,6 +15,15 @@ export class AllComponent implements OnInit {
 
   Facultades:Array<Facultad>=[]
   docentes:Array<Docente> = []
+
+  confirm:boolean=false
+  Titulo:string =''
+  Descripcion:string = ''
+  Id:string =''
+
+  alert:boolean = false
+  TituloAlert:string =''
+  DescripcionAlert:string=''
 
 
   constructor(
@@ -53,10 +62,35 @@ export class AllComponent implements OnInit {
   }
 
   async delete(IdDocente:string){
-      await this.db.firestore.collection('docentes').doc(IdDocente).delete().then(e=>{
 
-          this.getUsers()
+     var exist = await this.db.firestore.collection('zoom').where('IdDocente','==',IdDocente).get().then(docs=>{
+        
+        if(docs.docs.length>0){
+
+          return true
+        }
+
+        return false
       })
+
+      if(exist){
+         
+          this.TituloAlert ='No se pudo eliminar'
+          this.DescripcionAlert='El Docente tiene información ingresada.'
+          this.alert=true
+      }
+      else{
+          await this.db.firestore.collection('docentes').doc(IdDocente).delete().then(e=>{
+
+            this.getUsers()
+
+            this.TituloAlert ='Docente eliminado!'
+            this.DescripcionAlert='El docente fue eliminado del sistema'
+            this.alert=true
+        })
+      }
+
+
 
   }
 
@@ -86,5 +120,34 @@ export class AllComponent implements OnInit {
 
    return facultad[0].Nombre
   }
+
+  close(){
+    this.confirm = false
+    this.Titulo =''
+    this.Descripcion = ''
+    this.Id =''
+  }
+
+  alertConfirm(id:string,docente:string){
+    this.Id = id
+    this.Titulo ='¿Está seguro de eliminar el docente '+docente +"?"
+    this.Descripcion = 'El docente será eliminado definitivamente del sistema.'
+    this.confirm = true
+  }
+
+  confirmDelete(id:string){
+    
+    this.delete(id)
+    this.close()
+  }
+
+
+  closeAlert(){
+    this.alert = false
+    this.TituloAlert =''
+    this.DescripcionAlert = ''
+    
+  }
+
 
 }
