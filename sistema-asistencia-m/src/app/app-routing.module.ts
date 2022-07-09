@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 // route guard
 import { AuthGuard } from './shared/guard/auth.guard';
 import { ZoomComponent } from './admin/zoom/zoom.component';
+import { MatrizComponent } from './admin/matriz/matriz.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -35,7 +36,8 @@ const routes: Routes = [
       ]
 
       },
-      {path:'fichas',component:ZoomComponent}
+      {path:'fichas',component:ZoomComponent},
+      {path:'asistencia',component:MatrizComponent}
       
     ]
       

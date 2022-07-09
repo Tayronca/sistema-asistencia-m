@@ -6,6 +6,7 @@ import { zoom } from '../zoom';
 
 import * as moment from 'moment';
 
+
 @Component({
   selector: 'app-zoom',
   templateUrl: './zoom.component.html',
@@ -77,6 +78,8 @@ export class ZoomComponent implements OnInit {
           
           
           for(var x =0;x<list.length;x++){
+
+            console.log(list[x]['Hora de finalización'].trim())
             
             var clase ={
               IdDocente:'',
@@ -283,6 +286,8 @@ export class ZoomComponent implements OnInit {
   
     async  filterCI(e:any){
 
+      this.fichas=[]
+
       var ci = e.target.value.toUpperCase()
       await this.getFichas()
 
@@ -302,6 +307,8 @@ export class ZoomComponent implements OnInit {
 
 
     async  filterRange(e:any){
+
+      this.fichas=[]
 
       var ci = e.target.value.toUpperCase()
       await this.getFichas()

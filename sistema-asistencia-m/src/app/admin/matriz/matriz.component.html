@@ -1,0 +1,77 @@
+
+
+<div class="filter flex">
+  <!--  <div class="input-group">
+        <h4>Nombre</h4>
+        <div class="input-filter">
+            <input type="text" placeholder="Nombre" >
+            <i class="fa-solid fa-user"></i>
+        </div>
+    </div>
+    <div class="input-group">
+        <h4>Cedula</h4>
+        <div class="input-filter">
+            <input type="text" placeholder="cedula" >
+            <i class="fa-solid fa-id-card"></i>
+        </div>
+
+    </div>-->
+    <div class="input-group ">
+        <h4>Mes</h4>
+        <div class="input-filter">
+           <select class="select" [(ngModel)]="mes" (change)="getMatriz()">
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+           </select>
+        </div>
+    </div>
+    <div class="input-group">
+        <h4>Año</h4>
+        <div class="input-filter" *ngIf="years.length>0">
+           <select class="select" [(ngModel)]="year">
+                <option *ngFor="let x of years" [value]="x">{{x}}</option>
+           </select>
+        </div>
+    </div>
+
+</div>
+<br>
+<h4 *ngIf="matriz.length>0">Matriz Asistencia</h4>
+<br>
+
+<table class="table" *ngIf="matriz.length>0">
+    <thead class="color-head2">
+        <tr>
+            <th>Cedula</th>
+            <th>Nombre</th>
+            <th>Facultad de Usuario</th>
+            <th>Jornada</th>
+            <th>Total Horas (Mes)</th>
+            <th>Mes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let x of matriz; let index = index" >
+            <td>{{x.Cedula}}</td>
+            <td>{{x.Nombre}}</td>
+            <td>{{x.Facultad}}</td>
+            <td>TP</td>
+            <td>{{x.TotalHorasMes}} Hrs.</td>
+            <td>{{dateFormat(x.Fichas[0].HoraInicio)}}</td>
+            <td><i class="fa-solid fa-eye link"></i></td>
+        </tr>
+    </tbody>
+</table>
+
+
+

@@ -235,3 +235,19 @@ thead.color-head2{
     margin-bottom: 10px;
     font-size: 12px;
 }
+
+.input-filter .select{
+    border:none;
+    padding: 0;
+    margin: 5px 5px;
+    cursor: pointer;
+}
+
+select:focus{
+    outline: none;
+}
+
+.link{
+    cursor: pointer;
+}
+
