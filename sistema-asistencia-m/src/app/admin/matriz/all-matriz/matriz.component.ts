@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Matriz } from '../Matriz';
+import { Matriz } from '../../Matriz';
 
 import * as moment from 'moment';
 import { async } from '@firebase/util';
-import { Docente } from '../docentes/Docente';
-import { zoom } from '../zoom';
-import { Facultad } from '../docentes/Facultad';
+import { Docente } from '../../docentes/Docente';
+import { Facultad } from '../../docentes/Facultad';
 
 moment.locale('es')
 
@@ -147,7 +146,6 @@ export class MatrizComponent implements OnInit {
               
               }
 
-                console.log(this.matriz)
             })
           })
 

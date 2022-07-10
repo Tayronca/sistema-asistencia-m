@@ -1,0 +1,102 @@
+<h2>Nueva Matriz de asistencia Docente</h2>
+<br>
+<div class="input-group">
+    <h4>Docente</h4>
+    <select [(ngModel)]="IdDocente" (change)="getDocente()">
+        <option *ngFor="let x of docentes" [value]="x.IdDocente">{{x.Apellidos}} {{x.Nombres}} - {{x.Cedula}} </option>
+    </select>
+</div>
+
+
+
+<div class="input-group ">
+    <p>Fecha Inicio - Fecha Fin</p>
+    <div class="input-filter">
+        <input type="date" [(ngModel)]="fechaInicio" (change)="getDocente()">
+        <input type="date" [(ngModel)]="fechaFin" (change)="getDocente()">
+    </div>
+</div>
+
+
+<div class="matriz">
+
+    <div class="cronograma-semanal">
+        <h2 *ngIf="IdDocente">{{getNameDocente()}}</h2>
+        <h2>{{cedula}}</h2>
+        <h3>{{facultad}}</h3>
+        <h3>TP</h3>
+        <br>
+        <h4>Periódo Académico - {{dateFormat(fechaInicio,'MMMM')}} al {{dateFormat(fechaFin,'MMMM')}}
+            {{dateFormat(fechaFin,'YYYY')}} </h4>
+
+        <p>Horas Semanales de Referencia</p>
+        <br>
+        <table class="table">
+            <thead>
+                <td>L</td>
+                <td>M</td>
+                <td>M</td>
+                <td>J</td>
+                <td>V</td>
+                <td>S</td>
+                <td>Total Smnl.</td>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{referencia['lunes']}}</td>
+                    <td>{{referencia['martes']}}</td>
+                    <td>{{referencia['miércoles']}}</td>
+                    <td>{{referencia['jueves']}}</td>
+                    <td>{{referencia['viernes']}}</td>
+                    <td>{{referencia['sábado']}}</td>
+                    <td>{{referencia.Total}} Hrs.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div *ngIf="semanas.length>0" class="flex c-semanas">
+    <div class="table-matriz"  *ngFor="let x of semanas; let i = index">
+        <h4>Semana {{i+1}}</h4>
+        <table class="table ">
+            <thead class="color-head2">
+                <td>L{{x['lunes']?.Fecha}}</td>
+                <td>M{{x['martes']?.Fecha}}</td>
+                <td>M{{x['miércoles']?.Fecha}}</td>
+                <td>J{{x['jueves']?.Fecha}}</td>
+                <td>V{{x['viernes']?.Fecha}}</td>
+                <td>S{{x['sábado']?.Fecha}}</td>
+            </thead>
+            <tbody>
+               <tr>
+                <td>{{x['lunes']?.Total}}</td>
+                <td>{{x['martes']?.Total}}</td>
+                <td>{{x['miércoles']?.Total}}</td>
+                <td>{{x['jueves']?.Total}}</td>
+                <td>{{x['viernes']?.Total}}</td>
+                <td>{{x['sábado']?.Total}}</td>
+               </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="matriz">
+    <div>
+        <p>Total Horas {{dateFormat(fechaInicio,'DD-MM-yyyy')}} al {{dateFormat(fechaFin,'DD-MM-yyyy')}}:</p>
+         <h2> {{totalMes}} Hrs.</h2>
+    </div>
+</div>
+<br>
+
+<div class="input-group">
+    <h4>Observaciones  <span *ngIf="!Observaciones && !valid"  class="error">*</span></h4>
+    <textarea rows="10" [(ngModel)]="Observaciones" required></textarea>
+</div>
+
+<div class="input-group flex flex-end">
+    <button class="btn btn-confirm" >Agregar a Matriz</button>
+</div>
+<br>

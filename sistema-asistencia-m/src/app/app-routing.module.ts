@@ -14,7 +14,9 @@ import { LoginComponent } from './login/login.component';
 // route guard
 import { AuthGuard } from './shared/guard/auth.guard';
 import { ZoomComponent } from './admin/zoom/zoom.component';
-import { MatrizComponent } from './admin/matriz/matriz.component';
+import { MatrizComponent } from './admin/matriz/all-matriz/matriz.component';
+import { NewMatrizComponent } from './admin/matriz/new-matriz/new-matriz.component';
+import { MatrizrComponent } from './admin/matriz/matrizr.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -37,7 +39,11 @@ const routes: Routes = [
 
       },
       {path:'fichas',component:ZoomComponent},
-      {path:'asistencia',component:MatrizComponent}
+      {path:'asistencia',component:MatrizrComponent,
+      children:[
+        {path:'new',component:NewMatrizComponent},
+        {path:'',component:MatrizComponent}
+      ]}
       
     ]
       

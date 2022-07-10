@@ -30,7 +30,9 @@ import { NewComponent } from './admin/docentes/new/new.component';
 import { ZoomComponent } from './admin/zoom/zoom.component';
 import { AlertComponent } from './alert/alert.component';
 import { ConfirmComponent } from './confirm/confirm.component';
-import { MatrizComponent } from './admin/matriz/matriz.component';
+import { MatrizComponent } from './admin/matriz/all-matriz/matriz.component';
+import { NewMatrizComponent } from './admin/matriz/new-matriz/new-matriz.component';
+import { MatrizrComponent } from './admin/matriz/matrizr.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { MatrizComponent } from './admin/matriz/matriz.component';
     AlertComponent,
     ConfirmComponent,
     MatrizComponent,
+    NewMatrizComponent,
+    MatrizrComponent
   ],
   imports: [
     BrowserModule,

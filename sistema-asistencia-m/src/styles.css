@@ -50,7 +50,15 @@ ul{
     width: 100%;
 }
 
-input:focus{
+.input-group textarea{
+    background: none;
+    border: 1px solid #eee;
+    padding: 5px 10px;
+    margin: 10px 0 ;
+    width: 100%;
+}
+
+input:focus,textarea:focus{
     outline: none;
 }
 
@@ -251,3 +259,25 @@ select:focus{
     cursor: pointer;
 }
 
+
+.matriz{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    flex-flow: row wrap;
+}
+
+
+.matriz .table{
+    width: 100%;
+}
+
+.table-matriz{
+    margin: 10px;
+}
+
+.c-semanas{
+    flex-flow: row wrap;
+    justify-content: center;
+}
