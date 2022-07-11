@@ -79,8 +79,6 @@ export class ZoomComponent implements OnInit {
           
           for(var x =0;x<list.length;x++){
 
-            console.log(list[x]['Hora de finalización'].trim())
-            
             var clase ={
               IdDocente:'',
               Cedula:'',
@@ -162,7 +160,7 @@ export class ZoomComponent implements OnInit {
    async save(){
 
       var count = 0;
-
+ 
       await this.datosExcel.map(async row=>{
 
         var exist =await  this.db.firestore.collection('zoom').where('IdDocente','==',row.IdDocente).where('HoraInicio','==',row.HoraInicio).get().then(doc=>{
