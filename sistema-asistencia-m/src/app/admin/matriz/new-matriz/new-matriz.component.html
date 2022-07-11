@@ -89,14 +89,16 @@
         <br>
         
         <div class="input-group">
-            <h4>Observaciones  <span *ngIf="!Observaciones && !valid"  class="error">*</span></h4>
-            <textarea rows="10" [(ngModel)]="Observaciones" required></textarea>
+            <h4>Observaciones  <span *ngIf="docente.Observaciones && !valid"  class="error">*</span></h4>
+            <textarea rows="10" [(ngModel)]="docente.Observaciones" required></textarea>
         </div>
         
-        <div class="input-group flex flex-end">
-            <button class="btn btn-confirm" >Agregar a Matriz</button>
-        </div>
-        <br>
+
     </div>
 
 </div>
+
+<div class="input-group flex flex-end">
+    <button class="btn btn-confirm" >Agregar a Matriz</button>
+</div>
+<br>
