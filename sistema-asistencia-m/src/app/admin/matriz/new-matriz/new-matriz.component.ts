@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as moment from 'moment';
+import { DocenteFicha } from '../../DocenteFicha';
 import { Docente } from '../../docentes/Docente';
 import { Facultad } from '../../docentes/Facultad';
 import { Matriz } from '../../Matriz';
@@ -32,6 +33,19 @@ export class NewMatrizComponent implements OnInit {
   Observaciones:string=''
   valid:boolean=false
 
+  Matriz:Matriz={
+    IdMatriz: '',
+    FechaInicio: '',
+    FechaFin: '',
+    UsuarioEntrega: '',
+    UsuarioAprobado: '',
+    UsuarioRecibido: '',
+    Entregado: false,
+    Aprobado: false,
+    Recibido: false,
+    Docentes: []
+  }
+
 
 
   constructor(
@@ -43,9 +57,8 @@ export class NewMatrizComponent implements OnInit {
     this.fechaInicio = moment(new Date()).format('yyyy-MM-DD')
     this.fechaFin = moment(new Date()).format('yyyy-MM-DD')
 
-    this.getDocentes()
+   this.getDocentes()
 
-    this.getSemanasFecha()
   }
 
   async getDocentes() {
@@ -66,71 +79,85 @@ export class NewMatrizComponent implements OnInit {
       }
     })
 
-    if (this.docentes.length > 0) {
-      this.IdDocente = await this.docentes[0].IdDocente
 
-      await this.getFichas(this.docentes[0])
-    }
 
   }
 
   async getDocente() {
 
-    if (this.IdDocente != '') {
-      await this.db.firestore.collection('docentes').doc(this.IdDocente)
-        .get().then(e => {
-
-          if (e.exists) {
-            this.getFichas(e.data() as Docente)
-          }
-
-        })
-    }
-  }
-
-
-  async getFichas(docente: Docente) {
-    var d = docente
     var matriz: Matriz = {
       IdMatriz: "",
-      IdDocente: d.IdDocente,
-      Nombre: d.Nombres + " " + d.Apellidos,
-      Cedula: d.Cedula,
-      Facultad: "",
-      FechaInicio: "",
-      FechaFin: "",
-      FechaEntrega: "",
-      TotalHorasMes: "",
-      TotalHorasreferencia: "",
-      Observaciones: "",
+      FechaInicio: this.fechaInicio,
+      FechaFin: this.fechaFin,
       UsuarioEntrega: "",
       UsuarioAprobado: "",
       UsuarioRecibido: "",
       Entregado: false,
       Aprobado: false,
       Recibido: false,
-      Fichas: []
+      Docentes:[]
+    }
 
+
+      await this.db.firestore.collection('docentes')
+        .get().then( e => {
+
+
+          if (e.docs.length>0) {
+            
+              e.docs.map(async docente=>{
+
+                
+
+               await  this.getFichas(docente.data() as Docente,matriz)
+              })
+
+          
+          }
+
+        })
+
+          
+      this.Matriz =await matriz
+
+      await  console.log(this.Matriz)
+    
+  }
+
+
+  async getFichas(d: Docente,Matriz:Matriz) {
+    
+    
+    var Docente:DocenteFicha ={
+      IdDocente: d.IdDocente,
+      Nombre: d.Nombres + " " + d.Apellidos,
+      Cedula: d.Cedula,
+      Facultad: '',
+      TotalHorasMes: 0,
+      TotalHorasSemanal: 0,
+      Fichas: [],
+      Referencia:{Total:0},
+      Semanas:[],
+      Observaciones: ''
     }
 
     var facultad = await this.getFacultad(d.Facultad)
 
-    matriz.Facultad = facultad
+    Docente.Facultad = facultad,
 
     this.facultad = facultad
     this.cedula = d.Cedula
 
     this.referencia ={Total:0}
 
-    await this.db.firestore.collection('zoom').where("IdDocente", '==', matriz.IdDocente)
-      .get().then(e => {
+    await this.db.firestore.collection('zoom').where("IdDocente", '==', Docente.IdDocente)
+      .get().then(async e => {
 
         if (e.docs.length > 0) {
 
           var TotalHorasMes = 0
-          var exist = false
-
-          e.docs.map(f => {
+    
+         await e.docs.map(f => {
             var ficha = f.data() as any
 
             var fechaFicha = new Date(ficha.HoraInicio.toDate())
@@ -140,29 +167,24 @@ export class NewMatrizComponent implements OnInit {
 
             if (fechaFicha >= fechaInicio && fechaFicha <= fechaFin) {
 
-              matriz.Fichas.push(ficha)
+              Docente.Fichas.push(ficha)
 
               TotalHorasMes += Math.round(parseFloat(ficha.Duracion.toString()) / 60)
             }
 
           })
 
-
-          matriz.TotalHorasMes = TotalHorasMes.toString()
-
-
+          Docente.TotalHorasMes = TotalHorasMes
 
         }
 
-
-
-        if (matriz.Fichas.length > 0) {
+        if (Docente.Fichas.length > 0) {
 
           this.referencia = {
             Total: 0
           }
 
-          matriz.Fichas.map(ficha => {
+          await Docente.Fichas.map(ficha => {
 
             var date = ficha.HoraInicio as any
 
@@ -170,21 +192,38 @@ export class NewMatrizComponent implements OnInit {
 
 
             if (!this.referencia[day]) {
+
+       
+              Docente.TotalHorasSemanal = Math.round(parseFloat(ficha.Duracion.toString()) / 60)
               this.referencia[day] = Math.round(parseFloat(ficha.Duracion.toString()) / 60)
               this.referencia.Total += Math.round(parseFloat(ficha.Duracion.toString()) / 60)
+
+              Docente.Referencia[day] = Math.round(parseFloat(ficha.Duracion.toString()) / 60)
+              Docente.Referencia.Total += Math.round(parseFloat(ficha.Duracion.toString()) / 60)
             }
-
-
-
 
           })
 
+     
+             await this.getSemanasFecha(Docente)
+       
+         
 
         }
 
       })
 
-    this.getSemanasFecha()
+      if(Docente.Fichas.length>0){
+        await Matriz.Docentes.push(Docente)
+      }   
+
+    
+
+    
+   
+      
+  
+     
   }
 
   async getFacultad(IdFacultad: string) {
@@ -219,7 +258,7 @@ export class NewMatrizComponent implements OnInit {
     return docente?.Apellidos + " " + docente?.Nombres
   }
 
-  getSemanasFecha() {
+ async getSemanasFecha(Docente:DocenteFicha) {
 
     var currentDate = new Date(this.fechaInicio)
     var fechaFin = new Date(this.fechaFin)
@@ -242,11 +281,12 @@ export class NewMatrizComponent implements OnInit {
 
     }
 
-    this.getWeekends(dates)
+
+   await this.getWeekends(dates,Docente)
   }
 
 
-  getWeekends(dates: any) {
+  async getWeekends(dates: any,Docente:DocenteFicha) {
 
     this.totalMes =0
 
@@ -258,31 +298,27 @@ export class NewMatrizComponent implements OnInit {
     var semana: any = {}
 
 
-    dates.forEach(async (day: any) => {
+    await dates.forEach(async (day: any) => {
 
 
 
-      var d = moment(day).format('dddd')
-      var fecha = moment(day).format('DD')
-      var month = moment(day).format('MM')
+            var d = moment(day).format('dddd')
+            var fecha = moment(day).format('DD')
+            var month = moment(day).format('MM')
 
-      await this.db.firestore.collection('zoom').where("IdDocente", '==', this.IdDocente)
-        .get().then(fichas => {
-
-
-          if (d != 'domingo') {
-
-
+      
             semana[d] = {
               Fecha: fecha
             }
 
-            if (fichas.docs.length > 0) {
+ 
+
+          if (d != 'domingo') {
 
 
+           Docente.Fichas.map(zoom=>{
 
-              fichas.docs.map(zoom => {
-                var data = zoom.data() as any
+                var data = zoom as any
   
                 var fechaZoom = moment(data.HoraInicio.toDate()).format('DD-MM-YYYY')
   
@@ -298,11 +334,10 @@ export class NewMatrizComponent implements OnInit {
                 }
   
               })
-            }
-
-
 
           } else if (d == 'domingo') {
+
+            Docente.Semanas.push(semana)
             this.semanas.push(semana)
             semana = {}
 
@@ -312,6 +347,7 @@ export class NewMatrizComponent implements OnInit {
 
 
           if (dates.length == count && d != 'domingo') {
+            Docente.Semanas.push(semana)
             this.semanas.push(semana)
             semana = {}
           }
@@ -319,15 +355,6 @@ export class NewMatrizComponent implements OnInit {
 
   
         })
-
-
-
-
-
-
-
-
-    })
 
 
 

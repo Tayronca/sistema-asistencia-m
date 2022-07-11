@@ -48,7 +48,7 @@ export class MatrizComponent implements OnInit {
     
     this.getYears()
 
-    this.getMatriz()
+   // this.getMatriz()
 
 
     this.mes = new Date().getMonth()+1
@@ -72,9 +72,9 @@ export class MatrizComponent implements OnInit {
       this.Titulo =''
       this.Descripcion = ''
 
-      this.getMatriz()
+      //this.getMatriz()
   }
-
+/*
  async getMatriz(){
 
   this.matriz = []
@@ -182,7 +182,7 @@ export class MatrizComponent implements OnInit {
       }
 
   }
-
+*/
 
  
 
