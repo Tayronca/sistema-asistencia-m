@@ -1,0 +1,67 @@
+.container-report{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 4;
+  }
+
+@page {
+    size: A4;
+    margin: 0;
+  }
+  
+  .page {
+    min-height: 297mm;
+    width: 210mm;
+    height: 297mm;
+    background: #fff;
+    box-shadow: 1px 3px 2px rgb(212 212 212 / 30%);
+    border-radius: 20px;
+  }
+
+
+
+  .p-head{
+    color: #333333;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .p-head h4{
+    font-weight: 300;
+  }
+  
+  .container-detail{
+    display: flex;
+    padding: 20px;
+  }
+  .detail{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 12px;
+  }
+
+  .detail tr{
+    width: 100%;
+  }
+
+  .detail td{
+    padding: 7px;
+  }
+  
+  .detail th{
+    font-size: 11px;
+  }
+
+  .detail p{
+    font-weight: 300;
+    margin: 5px 0;
+  }
+
+  .negrita{
+    font-weight: 600;
+  }
+
+  .detail tbody tr:nth-child(2n){
+    background: #eee;
+}

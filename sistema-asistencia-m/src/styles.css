@@ -140,6 +140,7 @@ input:focus,textarea:focus{
 
 .table{
     border-collapse: collapse;
+    font-size: 12px;
 }
 
 
@@ -280,4 +281,37 @@ select:focus{
 .c-semanas{
     flex-flow: row wrap;
     justify-content: center;
+}
+
+.cronograma-semanal .table{
+    font-size: 12px;
+}
+
+
+
+.modal-report{
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #eeeeeec1;
+}
+
+.active{
+    color: #197b0e;
+    font-weight: 600;
+}
+
+.inactive{
+    color: red;
+    font-weight: 600;
+}
+
+.round{
+    border: 1px solid red;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
 }

@@ -17,29 +17,30 @@
     </div>
 </div>
 
-
+<h4 *ngIf="Matriz.Docentes.length>0">Periódo Académico - {{dateFormat(fechaInicio,'MMMM')}} al {{dateFormat(fechaFin,'MMMM')}}
+    {{dateFormat(fechaFin,'YYYY')}} </h4>
+    
 <div class="matriz" *ngIf="Matriz.Docentes.length>0">
 
     <div class="cronograma-semanal" *ngFor="let docente of Matriz.Docentes">
-        <h2 >{{docente.Nombre}}</h2>
-        <h2>{{docente.Cedula}}</h2>
-        <h3>{{docente.Facultad}}</h3>
-        <h3>TP</h3>
+        <h3>{{docente.Nombre}}</h3>
+        <h3>{{docente.Cedula}}</h3>
+        <h5>{{docente.Facultad}}</h5>
+        <h5>TP</h5>
         <br>
-        <h4>Periódo Académico - {{dateFormat(fechaInicio,'MMMM')}} al {{dateFormat(fechaFin,'MMMM')}}
-            {{dateFormat(fechaFin,'YYYY')}} </h4>
+
 
         <p>Horas Semanales de Referencia</p>
         <br>
         <table class="table">
             <thead>
-                <td>L</td>
-                <td>M</td>
-                <td>M</td>
-                <td>J</td>
-                <td>V</td>
-                <td>S</td>
-                <td>Total Smnl.</td>
+                <th>L</th>
+                <th>M</th>
+                <th>M</th>
+                <th>J</th>
+                <th>V</th>
+                <th>S</th>
+                <th>Total Smnl.</th>
             </thead>
             <tbody>
                 <tr>
@@ -68,12 +69,12 @@
                     </thead>
                     <tbody>
                        <tr>
-                        <td>{{x['lunes']?.Total}}</td>
-                        <td>{{x['martes']?.Total}}</td>
-                        <td>{{x['miércoles']?.Total}}</td>
-                        <td>{{x['jueves']?.Total}}</td>
-                        <td>{{x['viernes']?.Total}}</td>
-                        <td>{{x['sábado']?.Total}}</td>
+                        <td [class]="x['lunes']?.Tema?'round':''" [title]="x['lunes']?.Tema">{{x['lunes']?.Total}}</td>
+                        <td [class]="x['martes']?.Tema?'round':''" [title]="x['martes']?.Tema">{{x['martes']?.Total}} </td>
+                        <td [class]="x['miércoles']?.Tema?'round':''" [title]="x['miércoles']?.Tema">{{x['miércoles']?.Total}} </td>
+                        <td [class]="x['jueves']?.Tema?'round':''" [title]="x['jueves']?.Tema">{{x['jueves']?.Total}}</td>
+                        <td [class]="x['viernes']?.Tema?'round':''" [title]="x['viernes']?.Tema">{{x['viernes']?.Total}} </td>
+                        <td [class]="x['sábado']?.Tema?'round':''" [title]="x['sábado']?.Tema">{{x['sábado']?.Total}} </td>
                        </tr>
                     </tbody>
                 </table>
@@ -83,22 +84,22 @@
         <div class="matriz">
             <div>
                 <p>Total Horas {{dateFormat(fechaInicio,'DD-MM-yyyy')}} al {{dateFormat(fechaFin,'DD-MM-yyyy')}}:</p>
-                 <h2> {{totalMes}} Hrs.</h2>
+                 <h2> {{docente.TotalHorasMes}} Hrs.</h2>
             </div>
         </div>
         <br>
         
         <div class="input-group">
             <h4>Observaciones  <span *ngIf="docente.Observaciones && !valid"  class="error">*</span></h4>
-            <textarea rows="10" [(ngModel)]="docente.Observaciones" required></textarea>
+            <textarea rows="5" [(ngModel)]="docente.Observaciones" required></textarea>
         </div>
-        
+   
 
     </div>
 
 </div>
 
 <div *ngIf="Matriz.Docentes.length>0" class="input-group flex flex-end">
-    <button class="btn btn-confirm" >Agregar a Matriz</button>
+    <button class="btn btn-confirm" (click)="save()">Agregar a Matriz</button>
 </div>
 <br>

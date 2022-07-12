@@ -17,6 +17,8 @@ import { ZoomComponent } from './admin/zoom/zoom.component';
 import { MatrizComponent } from './admin/matriz/all-matriz/matriz.component';
 import { NewMatrizComponent } from './admin/matriz/new-matriz/new-matriz.component';
 import { MatrizrComponent } from './admin/matriz/matrizr.component';
+import { ReportesComponent } from './admin/reportes/reportes.component';
+import { PdfComponent } from './admin/reportes/pdf/pdf.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -43,7 +45,9 @@ const routes: Routes = [
       children:[
         {path:'new',component:NewMatrizComponent},
         {path:'',component:MatrizComponent}
-      ]}
+      ]},
+      {path:'reportes',component:ReportesComponent},
+      {path:'pdf/:id',component:PdfComponent}
       
     ]
       

@@ -1,1 +1,5 @@
-<router-outlet></router-outlet>
+<div *ngIf="authService.userData as user">
+    <div *ngIf="user.rol=='superusuario' || user.rol =='administrativo'">
+        <router-outlet></router-outlet>
+    </div>
+</div>

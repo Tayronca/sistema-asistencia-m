@@ -33,6 +33,10 @@ import { ConfirmComponent } from './confirm/confirm.component';
 import { MatrizComponent } from './admin/matriz/all-matriz/matriz.component';
 import { NewMatrizComponent } from './admin/matriz/new-matriz/new-matriz.component';
 import { MatrizrComponent } from './admin/matriz/matrizr.component';
+import { ReportComponent } from './admin/matriz/report/report.component';
+import { ReportesComponent } from './admin/reportes/reportes.component';
+import { ReportAprobadoComponent } from './admin/reportes/report-aprobado/report-aprobado.component';
+import { PdfComponent } from './admin/reportes/pdf/pdf.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,11 @@ import { MatrizrComponent } from './admin/matriz/matrizr.component';
     ConfirmComponent,
     MatrizComponent,
     NewMatrizComponent,
-    MatrizrComponent
+    MatrizrComponent,
+    ReportComponent,
+    ReportesComponent,
+    ReportAprobadoComponent,
+    PdfComponent
   ],
   imports: [
     BrowserModule,

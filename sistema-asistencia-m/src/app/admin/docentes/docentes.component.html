@@ -1,11 +1,15 @@
-<div>
-    <h2>Docentes</h2>
-    <br>
-    <ul class="flex sub-menu-horizontal">
-        <li [routerLink]="['/admin/docentes/']">Actuales</li>
-        <li [routerLink]="['/admin/docentes/new']">Nuevo</li>
-    </ul>
-    <br>
-    <router-outlet></router-outlet>
+<div *ngIf="authService.userData as user">
+    <div *ngIf="user.rol=='superusuario'">
+        <h2>Docentes</h2>
+        <br>
+        <ul class="flex sub-menu-horizontal">
+            <li [routerLink]="['/admin/docentes/']">Actuales</li>
+            <li [routerLink]="['/admin/docentes/new']">Nuevo</li>
+        </ul>
+        <br>
+        <router-outlet></router-outlet>
+    
+    </div>
+    
 
 </div>

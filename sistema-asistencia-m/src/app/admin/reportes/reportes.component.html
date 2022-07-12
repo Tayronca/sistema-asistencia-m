@@ -1,0 +1,43 @@
+<div *ngIf="authService.userData as user">
+    <div *ngIf="user.rol=='superusuario' || user.rol =='controlador'">
+        <h4 *ngIf="listaMatriz.length>0">Documentos por Recibir</h4>
+        <br>
+
+        <table class="table" *ngIf="listaMatriz.length>0">
+            <thead class="color-head2">
+                <tr>
+                    <th>Código</th>
+                    <th>Fecha Entrega</th>
+                    <th>Entreg. Por:</th>
+                    <th>Aprob. Por:</th>
+                    <th>Perido de Matriz</th>
+                    <th>Recibido. Por:</th>
+                    <th>Recibido</th>
+                    <th>Ver</th>
+                    <th>PDF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of listaMatriz; let index = index">
+                    <td>{{x.Codigo}}</td>
+                    <td>{{x.FechaEntrega}}</td>
+                    <td>{{x.UsuarioEntrega?x.UsuarioEntrega:'Pendiente'}}</td>
+                    <td>{{x.UsuarioAprobado?x.UsuarioAprobado:'Pendiente'}}</td>
+                    <td>{{dateFormat(x.FechaInicio,'DD MMM')}} al {{dateFormat(x.FechaFin,'DD MMM')}} del
+                        {{dateFormat(x.FechaInicio,'yyyy')}}</td>
+                    <td>{{x.UsuarioRecibido?x.UsuarioRecibido:'Sin Confirmar'}}</td>
+                    <td><span *ngIf="x.Recibido" class="active">Recibido</span> <span *ngIf="!x.Recibido"
+                            class="inactive">Pendiente</span></td>
+                    <td><i *ngIf="!x.Recibido" class="fa-solid fa-eye link" (click)="getReport(x)"></i></td>
+                    <td><i *ngIf="x.Recibido" class="fa-solid fa-download link" (click)="downloadPDF(x)"></i></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="modal-report" *ngIf="showReportAprobado">
+            <app-report-aprobado [Matriz]="matriz" (Close)="closeReport()"></app-report-aprobado>
+        </div>
+
+    </div>
+</div>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { User } from 'src/app/shared/services/user';
 import { DocenteFicha } from '../../DocenteFicha';
 import { Docente } from '../../docentes/Docente';
 import { Facultad } from '../../docentes/Facultad';
@@ -35,8 +38,10 @@ export class NewMatrizComponent implements OnInit {
 
   Matriz:Matriz={
     IdMatriz: '',
+    Codigo:'',
     FechaInicio: '',
     FechaFin: '',
+    FechaEntrega:'',
     UsuarioEntrega: '',
     UsuarioAprobado: '',
     UsuarioRecibido: '',
@@ -50,6 +55,8 @@ export class NewMatrizComponent implements OnInit {
 
   constructor(
     private db: AngularFirestore,
+    public authService: AuthService,    
+    private router:Router,
   ) { }
 
   ngOnInit(): void {
@@ -87,8 +94,10 @@ export class NewMatrizComponent implements OnInit {
 
     var matriz: Matriz = {
       IdMatriz: "",
+      Codigo:'',
       FechaInicio: this.fechaInicio,
       FechaFin: this.fechaFin,
+      FechaEntrega:'',
       UsuarioEntrega: "",
       UsuarioAprobado: "",
       UsuarioRecibido: "",
@@ -130,7 +139,7 @@ export class NewMatrizComponent implements OnInit {
     
     var Docente:DocenteFicha ={
       IdDocente: d.IdDocente,
-      Nombre: d.Nombres + " " + d.Apellidos,
+      Nombre:  d.Apellidos+" "+d.Nombres,
       Cedula: d.Cedula,
       Facultad: '',
       TotalHorasMes: 0,
@@ -328,6 +337,7 @@ export class NewMatrizComponent implements OnInit {
                 if (fechaZoom == fechaDay) {
 
                   semana[d].Total = Math.round(parseFloat(data.Duracion.toString()) / 60)
+                  semana[d].Tema = zoom.Tema
 
                   this.totalMes += Math.round(parseFloat(data.Duracion.toString()) / 60)
   
@@ -358,6 +368,43 @@ export class NewMatrizComponent implements OnInit {
 
 
 
+  }
+
+  //GUARDAR LA MATRIZ
+
+  async save(){
+
+    if(this.Matriz.Docentes.length>0){
+
+        var ref = await this.db.firestore.collection('matriz').doc()
+        var num =0
+        num = await this.db.firestore.collection('matriz').get().then(e=>{
+          if(e.docs.length>0){
+              return e.docs.length + 1
+          }
+
+          return 0+1
+        })
+
+        var user = this.authService.userData as User
+
+        this.Matriz.UsuarioEntrega = user.nombres +" "+user.apellidos
+        this.Matriz.Entregado = true
+        this.Matriz.FechaEntrega = moment().format('DD-MM-yyyy')
+        this.Matriz.IdMatriz = ref.id
+
+        this.Matriz.Codigo = 'MT-'+("00000" + num).slice(-5)
+
+    
+
+        this.db.firestore.collection('matriz').doc(ref.id).set(this.Matriz).then(()=>{
+            
+            this.router.navigate(['admin/asistencia'])
+        }).
+        catch(err=>{
+          console.log(err)
+        })
+    }
   }
 
 

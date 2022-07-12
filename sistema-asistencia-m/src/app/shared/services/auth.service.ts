@@ -30,8 +30,7 @@ export class AuthService {
           if(!this.router.url.includes('admin')){
             await this.router.navigate(['admin']);
           }
-            
-        
+             
       }
     })
 

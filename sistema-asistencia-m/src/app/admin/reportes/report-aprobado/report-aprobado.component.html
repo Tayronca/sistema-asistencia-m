@@ -1,0 +1,71 @@
+
+<div class="container-report">
+    <div class="page">
+        <div class="p-head">
+            <h2>UNIVERSIDAD IBEROAMERICANA DEL ECUADOR</h2>
+            <h4>INFORME HORAS DE CLASE DEL PERSONAL DOCENTE TIEMPO PARCIAL</h4>
+            <h4>PERIODO DE CLASES  {{dateFormat(Matriz.FechaInicio,'DD MMM')}} - {{dateFormat(Matriz.FechaFin,'DD MMM')}} {{dateFormat(Matriz.FechaFin,'yyyy')}}</h4>
+        </div>
+        <br>
+        <table class="detail">
+            <tr>
+                <td width="15%" class="negrita">Código:</td>
+                <td> {{Matriz.Codigo}}</td>
+                <td width="15%" class="negrita">Entregado Por:</td>
+                <td> {{Matriz.UsuarioEntrega}}</td>
+            </tr>
+            <tr>
+                <td width="15%" class="negrita">Fecha Inicio:</td>
+                <td> {{dateFormat(Matriz.FechaInicio,'DD/MM/yyyy')}}</td>
+                <td width="15%" class="negrita">Aprobado Por:</td>
+                <td> {{Matriz.UsuarioAprobado}}</td>
+            </tr>
+            <tr>
+                <td  width="15%" class="negrita">Fecha Fin:</td>
+                <td>  {{dateFormat(Matriz.FechaFin,'DD/MM/yyyy')}}</td>
+            </tr>
+            <tr>
+                <td  width="15%" class="negrita">Fecha Entrega:</td>
+                <td>{{dateFormat(Matriz.FechaEntrega,'DD MMM yyyy')}}</td>
+            </tr>
+            
+        </table>
+        <br>
+
+    <div class="container-detail">
+        <table class="detail">
+                <thead class="color-head2">
+                    <td>No.</td>
+                    <td>CÉDULA</td>
+                    <td>APELL.NOMBRS.</td>
+                    <td>ESCUELAS</td>
+                    <td>Hrs.SMNL</td>
+                    <td>Hrs.MES</td>
+                    <td>OBSERV.</td>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let x of Matriz.Docentes; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{x.Cedula}}</td>
+                        <td>{{x.Nombre}}</td>
+                        <td>{{x.Facultad}}</td>
+                        <td>{{x.TotalHorasSemanal}} Hrs.</td>
+                        <td>{{x.TotalHorasMes}} Hr.s</td>
+                        <td>{{x.Observaciones}}</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+
+        <div *ngIf="Matriz.Docentes.length>0" class="input-group flex flex-end">
+            <button class="btn btn-cancel" (click)="close()">Cancelar</button>
+            <button class="btn btn-confirm" (click)="confirm()">Recibir</button>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+

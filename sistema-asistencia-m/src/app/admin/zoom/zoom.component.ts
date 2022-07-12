@@ -5,6 +5,7 @@ import { Docente } from '../docentes/Docente';
 import { zoom } from '../zoom';
 
 import * as moment from 'moment';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class ZoomComponent implements OnInit {
 
   constructor(
     private db:AngularFirestore,
-    
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {

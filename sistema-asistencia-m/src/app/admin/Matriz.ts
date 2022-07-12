@@ -3,8 +3,10 @@ import { zoom } from "./zoom";
 
 export interface Matriz{
     IdMatriz:string,
+    Codigo:string,
     FechaInicio:string,
     FechaFin:string,
+    FechaEntrega:string,
     UsuarioEntrega:string,
     UsuarioAprobado:string,
     UsuarioRecibido:string,

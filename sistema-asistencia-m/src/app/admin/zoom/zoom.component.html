@@ -1,107 +1,112 @@
+<div *ngIf="authService.userData as user">
+    <div *ngIf="user.rol=='superusuario' || user.rol =='proveedor'">
 
-<div class="input-group">
-    <label for="file" class="btn-file"><i class="fa-solid fa-cloud-arrow-up"></i> Subir Ficha Zoom Excel</label>
-    <input type="file"
-           id="file"
-           accept=".xls, .xlsx"
-           (change)="fileInput($event)" #file>
+        <div class=" input-group">
+            <label for="file" class="btn-file"><i class="fa-solid fa-cloud-arrow-up"></i> Subir Ficha Zoom Excel</label>
+            <input type="file" id="file" accept=".xls, .xlsx" (change)="fileInput($event)" #file>
 
-    <span>{{fileName}}</span>
-</div>
-<br>
-<h4 *ngIf="datosExcel.length>0"> Fichas Zoom del Documento</h4>
-<br>
-<table class="table" *ngIf="datosExcel.length>0">
-    <thead>
-        <tr>
-            <th>Cedula</th>
-            <th>Tema</th>
-            <th>Nombre de Usuario</th>
-            <th>E-mail del Usuario</th>
-            <th>Hora de Inicio</th>
-            <th>Hora de Finalización</th>
-            <th>Duración (Minutos)</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let x of datosExcel; let index = index" >
-            <td>{{x.Cedula?x.Cedula:'No Existe el Usuario'}}</td>
-            <td>{{x.Tema}}</td>
-            <td>{{x.Nombre}}</td>
-            <td>{{x.Correo}}</td>
-            <td>{{dateFormat(x.HoraInicio)}}</td>
-            <td>{{dateFormat(x.HoraFin)}}</td>
-            <td>{{x.Duracion}}</td>
-        </tr>
-    </tbody>
-</table>
-<div *ngIf="datosExcel.length>0" class="input-group flex flex-end">
-    <button class="btn btn-confirm" (click)="save()">Guardar Fichas</button>
-</div>
-
-<br>
-
-<div class="filter flex">
-    <div class="input-group">
-        <h4>Nombre</h4>
-        <div class="input-filter">
-            <input type="text" placeholder="Nombre" (keyup)="filterName($event)">
-            <i class="fa-solid fa-user"></i>
-        </div>
-    </div>
-    <div class="input-group">
-        <h4>Cedula</h4>
-        <div class="input-filter">
-            <input type="text" placeholder="cedula" (keyup)="filterCI($event)">
-            <i class="fa-solid fa-id-card"></i>
+            <span>{{fileName}}</span>
         </div>
 
-    </div>
-    <div class="input-group ">
-        <h4>Rango Fechas</h4>
-        <div class="input-filter">
-            <input type="date" [(ngModel)]="fechaInicio" (change)="filterRange($event)">
-            <input type="date" [(ngModel)]="fechaFin" (change)="filterRange($event)" >
+        <br>
+        <h4 *ngIf="datosExcel.length>0"> Fichas Zoom del Documento</h4>
+        <br>
+        <table class="table" *ngIf="datosExcel.length>0">
+            <thead>
+                <tr>
+                    <th>Cedula</th>
+                    <th>Tema</th>
+                    <th>Nombre de Usuario</th>
+                    <th>E-mail del Usuario</th>
+                    <th>Hora de Inicio</th>
+                    <th>Hora de Finalización</th>
+                    <th>Duración (Minutos)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of datosExcel; let index = index">
+                    <td>{{x.Cedula?x.Cedula:'No Existe el Usuario'}}</td>
+                    <td>{{x.Tema}}</td>
+                    <td>{{x.Nombre}}</td>
+                    <td>{{x.Correo}}</td>
+                    <td>{{dateFormat(x.HoraInicio)}}</td>
+                    <td>{{dateFormat(x.HoraFin)}}</td>
+                    <td>{{x.Duracion}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="datosExcel.length>0" class="input-group flex flex-end">
+            <button class="btn btn-confirm" (click)="save()">Guardar Fichas</button>
         </div>
-        
+
+        <br>
+
+        <div class="filter flex">
+            <div class="input-group">
+                <h4>Nombre</h4>
+                <div class="input-filter">
+                    <input type="text" placeholder="Nombre" (keyup)="filterName($event)">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+            <div class="input-group">
+                <h4>Cedula</h4>
+                <div class="input-filter">
+                    <input type="text" placeholder="cedula" (keyup)="filterCI($event)">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+
+            </div>
+            <div class="input-group ">
+                <h4>Rango Fechas</h4>
+                <div class="input-filter">
+                    <input type="date" [(ngModel)]="fechaInicio" (change)="filterRange($event)">
+                    <input type="date" [(ngModel)]="fechaFin" (change)="filterRange($event)">
+                </div>
+
+            </div>
+
+        </div>
+        <br>
+        <h4 *ngIf="fichas.length>0">Fichas Actuales</h4>
+        <br>
+
+        <table class="table" *ngIf="fichas.length>0">
+            <thead class="color-head2">
+                <tr>
+                    <th>Cedula</th>
+                    <th>Tema</th>
+                    <th>Nombre de Usuario</th>
+                    <th>E-mail del Usuario</th>
+                    <th>Hora de Inicio</th>
+                    <th>Hora de Finalización</th>
+                    <th>Duración (Minutos)</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let x of fichas; let index = index">
+                    <td>{{x.Cedula}}</td>
+                    <td>{{x.Tema}}</td>
+                    <td>{{x.Nombre}}</td>
+                    <td>{{x.Correo}}</td>
+                    <td>{{dateFormat(x.HoraInicio)}}</td>
+                    <td>{{dateFormat(x.HoraFin)}}</td>
+                    <td>{{x.Duracion}}</td>
+                    <td><i class="fa-solid fa-trash-can icon-delete" (click)="alertConfirm(x.IdZoom, x.Nombre)"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+        <app-alert *ngIf="show" [Titulo]="Titulo" [Descripcion]="Descripcion" (Close)="close()"></app-alert>
+
+
+        <app-confirm *ngIf="confirm" [Titulo]="TituloConfirm" [Descripcion]="DescripcionConfirm" [Id]="Id"
+            (Close)="closeConfirm()" (Confirm)="confirmDelete($event)"></app-confirm>
+
     </div>
-
 </div>
-<br>
-<h4 *ngIf="fichas.length>0">Fichas Actuales</h4>
-<br>
-
-<table class="table" *ngIf="fichas.length>0">
-    <thead class="color-head2">
-        <tr>
-            <th>Cedula</th>
-            <th>Tema</th>
-            <th>Nombre de Usuario</th>
-            <th>E-mail del Usuario</th>
-            <th>Hora de Inicio</th>
-            <th>Hora de Finalización</th>
-            <th>Duración (Minutos)</th>
-            <th>Eliminar</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let x of fichas; let index = index" >
-            <td>{{x.Cedula}}</td>
-            <td>{{x.Tema}}</td>
-            <td>{{x.Nombre}}</td>
-            <td>{{x.Correo}}</td>
-            <td>{{dateFormat(x.HoraInicio)}}</td>
-            <td>{{dateFormat(x.HoraFin)}}</td>
-            <td>{{x.Duracion}}</td>
-            <td><i class="fa-solid fa-trash-can icon-delete" (click)="alertConfirm(x.IdZoom, x.Nombre)"></i></td>
-        </tr>
-    </tbody>
-</table>
-
-
-
-
-<app-alert *ngIf="show" [Titulo]="Titulo" [Descripcion]="Descripcion" (Close)="close()"></app-alert>
-
-
-<app-confirm *ngIf="confirm" [Titulo]="TituloConfirm" [Descripcion]="DescripcionConfirm" [Id]="Id" (Close)="closeConfirm()" (Confirm)="confirmDelete($event)"></app-confirm>

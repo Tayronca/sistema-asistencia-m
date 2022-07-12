@@ -3,11 +3,13 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Matriz } from '../../Matriz';
 
 import * as moment from 'moment';
+moment.locale('es')
+
 import { async } from '@firebase/util';
 import { Docente } from '../../docentes/Docente';
 import { Facultad } from '../../docentes/Facultad';
 
-moment.locale('es')
+
 
 @Component({
   selector: 'app-matriz',
@@ -26,7 +28,7 @@ export class MatrizComponent implements OnInit {
   fileName:string=''
 
 
-  matriz:Array<Matriz>=[]
+  listaMatriz:Array<Matriz>=[]
 
  fechaInicio:string=''
  fechaFin:string =''
@@ -39,6 +41,23 @@ export class MatrizComponent implements OnInit {
  years:Array<number>=[]
  year:number=0
 
+
+ showReport=false
+ matriz:Matriz={
+   IdMatriz: '',
+   Codigo: '',
+   FechaInicio: '',
+   FechaFin: '',
+   FechaEntrega: '',
+   UsuarioEntrega: '',
+   UsuarioAprobado: '',
+   UsuarioRecibido: '',
+   Entregado: false,
+   Aprobado: false,
+   Recibido: false,
+   Docentes: []
+ }
+
   constructor(
     private db:AngularFirestore,
     
@@ -48,7 +67,7 @@ export class MatrizComponent implements OnInit {
     
     this.getYears()
 
-   // this.getMatriz()
+    this.getMatriz()
 
 
     this.mes = new Date().getMonth()+1
@@ -58,98 +77,30 @@ export class MatrizComponent implements OnInit {
 
  
 
-
-  dateFormat(date:any){
-
- 
-    return moment(date.toDate()).format('MMMM').toUpperCase()
-  }
-
-   
+  
 
   close(){
       this.show = false
       this.Titulo =''
       this.Descripcion = ''
 
-      //this.getMatriz()
+      this.getMatriz()
   }
-/*
+
  async getMatriz(){
 
-  this.matriz = []
+  this.listaMatriz = []
 
-    await this.db.firestore.collection('docentes').get().then(resp=>{
+    await this.db.firestore.collection('matriz').where('Aprobado','==',false).get().then(resp=>{
 
       if(resp.docs.length>0){
         
-          resp.docs.map(async docente=>{
+        resp.docs.map(m=>{
+            var matriz = m.data() as Matriz
 
-              var d = docente.data() as Docente
-            var matriz:Matriz ={
-              IdMatriz:"",
-              IdDocente:d.IdDocente,
-              Nombre:d.Nombres+" "+ d.Apellidos,
-              Cedula:d.Cedula,
-              Facultad:"",
-              FechaInicio:"",
-              FechaFin:"",
-              FechaEntrega:"",
-              TotalHorasMes:"",
-              TotalHorasreferencia:"",
-              Observaciones:"",
-              UsuarioEntrega:"",
-              UsuarioAprobado:"",
-              UsuarioRecibido:"",
-              Entregado:false,
-              Aprobado:false,
-              Recibido:false,
-              Fichas:[]
-              
-            }
+            this.listaMatriz.push(matriz)
+        })
 
-            var facultad = await this.getFacultad(d.Facultad)
-
-            matriz.Facultad = facultad
-
-             
-            await this.db.firestore.collection('zoom').where("IdDocente",'==',matriz.IdDocente)
-            .get().then( e=>{
-
-              if(e.docs.length>0){
-
-                var TotalHorasMes =0
-                var exist = false
-
-               e.docs.map(f=>{
-                  var ficha = f.data() as any
-
-                 
-
-                  if(parseInt(moment(ficha.HoraInicio.toDate()).format('MM')) == this.mes && parseInt(moment(ficha.HoraInicio.toDate()).format('yyyy')) == this.year ){
-                   
-                    matriz.Fichas.push(ficha)
-
-                    TotalHorasMes += Math.round(parseFloat(ficha.Duracion.toString())/60)
-                  }
-
-                })
-
-
-                matriz.TotalHorasMes = TotalHorasMes.toString()
-                if(matriz.Fichas.length>0){
-               
-
-                  this.matriz.push(matriz)
-                }
-
-              
-              }
-
-            })
-          })
-
-      
       }
     })
 
@@ -157,64 +108,12 @@ export class MatrizComponent implements OnInit {
   }
 
 
- async  filterName(e:any){
-
-      var name = e.target.value.toUpperCase()
-      await this.getMatriz()
-
-      var consulta:Array<Matriz> = []
-
-      if(this.matriz.length>0 && name!=''){
-          this.matriz.map(a=>{
-              var matriz = a as any
-
-            if(matriz.Nombre.toUpperCase().includes(name) ){
-                consulta.push(a)
-            }
-          })
-
-          
-        this.matriz = consulta
-      }
-      
-      else{
-        this.getMatriz()
-      }
-
-  }
-*/
-
- 
-
-
-    
-  
- 
-
-
-    async getFacultad(IdFacultad:string){
-
-      var nombre:string=''
-
-      nombre = await this.db.firestore.collection('facultad').doc(IdFacultad).get().then(e=>{
-
-        if(e.exists){
-            var facultad = e.data() as Facultad
-            return facultad.Nombre.toString()
-        }
-
-        return ""
-      })
-     
-  
-      return nombre
-    }
 
     async getYears(){
 
         this.years = []
 
-        await this.db.firestore.collection('zoom').get().then(e=>{
+        await this.db.firestore.collection('matriz').get().then(e=>{
 
           if(e.docs.length>0){
 
@@ -223,7 +122,7 @@ export class MatrizComponent implements OnInit {
                 var data = doc.data() as any
 
 
-                var year = parseInt(moment(data.HoraInicio.toDate()).format('yyyy'))
+                var year = parseInt(moment(data.FechaEntrega).format('yyyy'))
 
           
 
@@ -240,5 +139,22 @@ export class MatrizComponent implements OnInit {
 
         this.year = await this.years[0]
     }
+
+    dateFormat(date: any, format: string) {
+
+
+      return moment(date).format(format).toUpperCase()
+    }
+  
+      getReport(Matriz:Matriz){
+          this.matriz = Matriz
+          this.showReport= true
+      }
+
+      closeReport(){
+        this.showReport = false
+
+        this.getMatriz()
+      }
 
 }
