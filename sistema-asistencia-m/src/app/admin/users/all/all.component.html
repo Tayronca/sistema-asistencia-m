@@ -3,11 +3,12 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Cedula</th>
+                    <th>Cédula</th>
                     <th>Nombre</th>
+                    <th>Título</th>
                     <th>Rol</th>
                     <th>Correo</th>
-                    <th>Verificado</th>
+                    <th>Verificación</th>
                     <th>Reset Password</th>
                     <th>Eliminar</th>
                     <th>Editar</th>
@@ -17,14 +18,17 @@
                 <tr *ngFor="let x of users; let index = index">
                     <td>{{x.cedula}}</td>
                     <th>{{x.nombres}} {{x.apellidos}}</th>
+                    <th>{{x.titulo}}</th>
                     <th>{{x.rol}}</th>
                     <th>{{x.correo}}</th>
                     <th>{{x.emailVerified?'Si':'No'}}</th>
                     <th><button *ngIf="x.rol != 'superusuario'" class="btn-link" (click)='authService.ForgotPassword(x.correo)'>Enviar Correo</button></th>
-                    <th><i *ngIf="x.rol != 'superusuario'" class="fa-solid fa-trash-can icon-delete"></i></th>
+                    <th><i *ngIf="x.rol != 'superusuario'" class="fa-solid fa-trash-can icon-delete" (click)="delete(x)"></i></th>
                     <th><i class="fa-solid fa-pen-to-square icon-edit" (click)="editUser(x.uid)"></i></th>
                 </tr>
 
             </tbody>
         </table>
     </div>
+
+    <app-confirm *ngIf="confirm" [Titulo]="Titulo" [Descripcion]="Descripcion" [Id]="Id" (Close)="close()" (Confirm)="deleteUser($event)"></app-confirm>

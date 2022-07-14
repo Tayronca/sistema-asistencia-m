@@ -49,7 +49,6 @@ export class ReportAprobadoComponent implements OnInit {
       if(this.Matriz.IdMatriz){
         var user = this.authService.userData as User
         this.Matriz.Recibido = true
-        this.Matriz.UsuarioRecibido = user.nombres +" "+user.apellidos
 
         this.db.firestore.collection('matriz').doc(this.Matriz.IdMatriz).update(this.Matriz).then(()=>{
           this.Close.emit()

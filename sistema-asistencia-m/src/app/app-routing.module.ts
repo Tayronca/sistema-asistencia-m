@@ -19,12 +19,14 @@ import { NewMatrizComponent } from './admin/matriz/new-matriz/new-matriz.compone
 import { MatrizrComponent } from './admin/matriz/matrizr.component';
 import { ReportesComponent } from './admin/reportes/reportes.component';
 import { PdfComponent } from './admin/reportes/pdf/pdf.component';
+import { HomeComponent } from './admin/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path:'login',component:LoginComponent, },
   {path:'admin',component:AdminComponent, canActivate: [AuthGuard],
     children:[
+      {path:'',component:HomeComponent},
       {path:'users',component:UsersComponent,
         children:[
           {path:'',component:AllComponent},

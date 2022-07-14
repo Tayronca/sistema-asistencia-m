@@ -19,7 +19,8 @@ export class EditComponent implements OnInit {
     uid:'',
     correo:'',
     photoURL:'',
-    emailVerified:false
+    emailVerified:false,
+    titulo:''
   };
   valid:boolean= false;
   uid:string='';
@@ -51,7 +52,7 @@ export class EditComponent implements OnInit {
 
     this.user = e.data() as User
 
-    console.log(this.user)
+
 
    })
 
@@ -60,8 +61,6 @@ export class EditComponent implements OnInit {
   async updateUser(){
 
     await this.db.firestore.collection('users').doc(this.uid).update(this.user).then(e=>{
-
-      console.log(e)
 
           this.router.navigate(['admin/users'])
   

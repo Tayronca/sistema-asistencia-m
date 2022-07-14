@@ -47,6 +47,7 @@ export class ReportesComponent implements OnInit {
   async getMatriz(){
 
     this.listaMatriz = []
+    var  lista:Array<Matriz>=[]
   
       await this.db.firestore.collection('matriz').where('Aprobado','==',true).get().then(resp=>{
   
@@ -55,13 +56,13 @@ export class ReportesComponent implements OnInit {
           resp.docs.map(m=>{
               var matriz = m.data() as Matriz
   
-              this.listaMatriz.push(matriz)
+              lista.push(matriz)
           })
   
         }
       })
   
-       
+       this.listaMatriz = await lista.sort((a,b)=>b.Codigo.localeCompare(a.Codigo))
     }
 
     dateFormat(date: any, format: string) {

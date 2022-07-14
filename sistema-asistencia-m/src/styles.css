@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
 @font-face {
     font-family: "Verdana";
     src: local("Verdana"), url(./assets/font/verdana.ttf) format("truetype");
@@ -6,6 +8,7 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 
@@ -48,6 +51,15 @@ ul{
     padding: 5px 10px;
     margin: 10px 0 ;
     width: 100%;
+}
+
+.detail input{
+    background: none;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 5px 10px;
+    margin: 10px 0 ;
+    width: auto;
 }
 
 .input-group textarea{
@@ -130,11 +142,19 @@ input:focus,textarea:focus{
 
 .sub-menu-horizontal li{
     padding: 10px;
+    font-size: 12px;
     cursor: pointer;
+    font-weight: 400;
 }
+
+
 
 .sub-menu-horizontal li:hover{
     color: #f6d70e;
+}
+
+.sub-menu li i{
+    width: 25px;
 }
 
 
@@ -263,10 +283,10 @@ select:focus{
 
 .matriz{
     display: flex;
+    flex-flow: column;
     width: 100%;
     justify-content: center;
     text-align: center;
-    flex-flow: row wrap;
 }
 
 
@@ -314,4 +334,102 @@ select:focus{
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
+}
+
+.inactive-docente{
+    display: none;
+}
+
+.d-docente-m{
+    border: 1px solid #eeee;
+    cursor: pointer;
+    display: flex;
+    flex-flow: row;
+}
+.d-docente-m:hover{
+    background: #eee;
+}
+
+.d-docente-m div{
+    width: 33.3333%;
+    padding: 10px;
+}
+
+.d-docente-m p{
+    font-size: 13px;
+}
+
+.table-matriz td{
+    position: relative;
+}
+
+.table-matriz td:hover .tooltip{
+        display: block;
+}
+
+.tooltip{
+    position: absolute;
+    z-index: 3;
+    background: #fff;
+    border: 1px solid #dabd00;
+    left: 0;
+    top: 0;
+    width: 120px;
+    border-radius: 5px;
+    display: none;
+    box-shadow: 1px 2px 3px #cbcbcb;
+    padding: 5px;
+
+}
+
+.tooltip p{
+    padding: 5px;
+}
+
+.data-user{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.data-user img{
+    width: 70px;
+    margin: 20px 0;
+}
+.data-user h4{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.data-user p{
+    font-size: 12px;
+}
+
+.btn-sesion{
+    margin: 20px 0;
+}
+
+
+
+.c-home{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-home{
+    width: 200px;
+    margin: 20px 0;
+}
+
+.c-home h3{
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.c-img-home img{
+    width: 600px;
+    margin: 20px 0;
 }

@@ -51,7 +51,8 @@ export class NewMatrizComponent implements OnInit {
     Docentes: []
   }
 
-
+  IdShow:string=''
+  
 
   constructor(
     private db: AngularFirestore,
@@ -129,8 +130,8 @@ export class NewMatrizComponent implements OnInit {
           
       this.Matriz =await matriz
 
-      await  console.log(this.Matriz)
-    
+   
+  
   }
 
 
@@ -229,9 +230,6 @@ export class NewMatrizComponent implements OnInit {
     
 
     
-   
-      
-  
      
   }
 
@@ -317,7 +315,9 @@ export class NewMatrizComponent implements OnInit {
 
       
             semana[d] = {
-              Fecha: fecha
+              Fecha: fecha,
+              Total:0,
+              Tema:''
             }
 
  
@@ -332,12 +332,20 @@ export class NewMatrizComponent implements OnInit {
                 var fechaZoom = moment(data.HoraInicio.toDate()).format('DD-MM-YYYY')
   
                 var fechaDay = moment(day).format('DD-MM-YYYY')
+
+                var horaInicio =  moment(data.HoraInicio.toDate()).format('HH:mm')
+                var horaFin =  moment(data.HoraFin.toDate()).format('HH:mm')
   
   
                 if (fechaZoom == fechaDay) {
+                  var total = Math.round(parseFloat(data.Duracion.toString()) / 60)
 
-                  semana[d].Total = Math.round(parseFloat(data.Duracion.toString()) / 60)
-                  semana[d].Tema = zoom.Tema
+                  semana[d].Total += total
+                  if(zoom.Tema!=undefined){
+
+                    semana[d].Tema += zoom.Tema+ " de "+horaInicio+ " - "+horaFin+ " Hrs. Total: "+total+" Hrs. ; "
+                  }
+                  
 
                   this.totalMes += Math.round(parseFloat(data.Duracion.toString()) / 60)
   
@@ -388,9 +396,9 @@ export class NewMatrizComponent implements OnInit {
 
         var user = this.authService.userData as User
 
-        this.Matriz.UsuarioEntrega = user.nombres +" "+user.apellidos
+        this.Matriz.UsuarioEntrega =   user.titulo.split('.')[0] +". "+  user.nombres +" "+user.apellidos
         this.Matriz.Entregado = true
-        this.Matriz.FechaEntrega = moment().format('DD-MM-yyyy')
+        this.Matriz.FechaEntrega = moment().format('yyyy-MM-DD')
         this.Matriz.IdMatriz = ref.id
 
         this.Matriz.Codigo = 'MT-'+("00000" + num).slice(-5)
@@ -406,6 +414,17 @@ export class NewMatrizComponent implements OnInit {
         })
     }
   }
+
+  showDocente(Id:string){
+
+    if(Id ==this.IdShow){
+      this.IdShow = ''
+    }else{
+      this.IdShow = Id
+    }
+  }
+
+
 
 
 }

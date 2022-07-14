@@ -92,7 +92,8 @@ export class AuthService {
       cedula: user.cedula,
       rol: user.rol,
       photoURL: user.photoURL,
-      emailVerified: singUser.emailVerified
+      emailVerified: singUser.emailVerified,
+      titulo:user.titulo
     };
     return userRef.set(userData, {
       merge: true,

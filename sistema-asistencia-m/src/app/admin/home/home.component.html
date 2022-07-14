@@ -1,0 +1,9 @@
+<div class="c-home">
+    <img class="img-home" src="../../../assets/img/logo.png" alt="">
+    <h2 *ngIf="authService.userData as user">Hola! {{user.nombres}} {{user.apellidos}}</h2>
+        <h3>Bienvenido al Sistema de Control para Docentes Invitados!</h3>
+
+        <div class="c-img-home">
+            <img src="../../../assets/img/docente.png" >
+        </div>
+</div>

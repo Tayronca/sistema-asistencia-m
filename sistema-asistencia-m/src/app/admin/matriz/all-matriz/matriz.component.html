@@ -1,39 +1,13 @@
 
 
 <div class="filter flex">
-<!--
-    <div class="input-group ">
-        <h4>Mes</h4>
-        <div class="input-filter">
-           <select class="select" [(ngModel)]="mes" >
-                <option value="1">Enero</option>
-                <option value="2">Febrero</option>
-                <option value="3">Marzo</option>
-                <option value="4">Abril</option>
-                <option value="5">Mayo</option>
-                <option value="6">Junio</option>
-                <option value="7">Julio</option>
-                <option value="8">Agosto</option>
-                <option value="9">Septiembre</option>
-                <option value="10">Octubre</option>
-                <option value="11">Noviembre</option>
-                <option value="12">Diciembre</option>
-           </select>
-        </div>
-    </div>
-    <div class="input-group">
-        <h4>Año</h4>
-        <div class="input-filter" *ngIf="years.length>0">
-           <select class="select" [(ngModel)]="year">
-                <option *ngFor="let x of years" [value]="x">{{x}}</option>
-           </select>
-        </div>
-    </div>-->
+
     <div class="input-group">
         <h4></h4>
         <button class="btn btn-confirm" [routerLink]="['/admin/asistencia/new']">Nueva Asistencia</button>
     </div>
 </div>
+
 <br>
 <h4 *ngIf="listaMatriz.length>0">Matriz Asistencia</h4>
 <br>
@@ -57,6 +31,7 @@
             <td>{{dateFormat(x.FechaInicio,'DD MMM')}} al {{dateFormat(x.FechaFin,'DD MMM')}} del {{dateFormat(x.FechaInicio,'yyyy')}}</td>
             <td><span *ngIf="x.Aprobado" class="active">Aprobado</span> <span *ngIf="!x.Aprobado" class="inactive">Pendiente</span></td>
             <td><i class="fa-solid fa-eye link" (click)="getReport(x)"></i></td>
+            <td><i class="fa-solid fa-trash-can icon-delete" (click)="delete(x)"></i></td>
         </tr>
     </tbody>
 </table>
@@ -66,3 +41,6 @@
 <div class="modal-report" *ngIf="showReport">
         <app-report  [Matriz]="matriz" (Close)="closeReport()"></app-report>
 </div>
+
+
+<app-confirm *ngIf="confirm" [Titulo]="Titulo" [Descripcion]="Descripcion" [Id]="Id" (Close)="closeConfirm()" (Confirm)="confirmDelete($event)"></app-confirm>

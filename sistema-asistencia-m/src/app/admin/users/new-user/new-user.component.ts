@@ -19,6 +19,7 @@ export class NewUserComponent implements OnInit {
   password:string= "";
   show:boolean= false;
   valid:boolean = true;
+  titulo:string='';
 
   constructor(
     private firestore:AngularFirestore,
@@ -52,8 +53,8 @@ export class NewUserComponent implements OnInit {
 
   saveUser(){
 
-    const{rol,nombres,apellidos,cedula,correo,password} = this
-    if(rol && nombres&&apellidos&&cedula&&correo&&password){
+    const{rol,nombres,apellidos,cedula,correo,password,titulo} = this
+    if(rol && nombres&&apellidos&&cedula&&correo&&password&&titulo){
       this.valid = true
       const auth = this.auth;
 
@@ -71,6 +72,7 @@ export class NewUserComponent implements OnInit {
                 correo:this.correo,
                 emailVerified:false,
                 uid:result.user.uid,
+                titulo:this.titulo,
                 photoURL:''
               }
           
@@ -98,6 +100,7 @@ export class NewUserComponent implements OnInit {
     this.apellidos = ''
     this.correo = ''
     this.cedula = ''
+    this.titulo = ''
   }
  
 

@@ -37,6 +37,7 @@ import { ReportComponent } from './admin/matriz/report/report.component';
 import { ReportesComponent } from './admin/reportes/reportes.component';
 import { ReportAprobadoComponent } from './admin/reportes/report-aprobado/report-aprobado.component';
 import { PdfComponent } from './admin/reportes/pdf/pdf.component';
+import { HomeComponent } from './admin/home/home.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { PdfComponent } from './admin/reportes/pdf/pdf.component';
     ReportComponent,
     ReportesComponent,
     ReportAprobadoComponent,
-    PdfComponent
+    PdfComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

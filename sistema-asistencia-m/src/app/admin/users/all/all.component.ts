@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { User } from 'src/app/shared/services/user';
 
 @Component({
   selector: 'app-all',
@@ -12,6 +13,12 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class AllComponent implements OnInit {
 
   users:any = []
+
+  Id:string =''
+  confirm:boolean=false
+  Titulo:string=''
+  Descripcion:string=''
+
 
   constructor(
     private db:AngularFirestore,
@@ -46,13 +53,33 @@ export class AllComponent implements OnInit {
     this.router.navigate(['/admin/users/edit/'+uid])
   }
 
-  async delUser(uid:string){
+  async delete(user:User){
+  
 
-     /* await this.db.doc(uid).delete().then(e=>{
+    this.Id = user.uid
+    this.confirm = true
+    this.Titulo = '¿Está seguro de eliminar al usuario '+ user.nombres + " "+ user.apellidos + "?"
+    this.Descripcion = "El usuario será eliminado del sistema"
 
-          this.auth.
-      })*/
+    
 
+  }
+
+  async deleteUser(Id:any){
+    await this.db.firestore.collection('users').doc(Id).delete().then(e=>{
+
+        this.getUsers()
+    }).catch(err=>console.log(err))
+
+    await this.close()
+
+  }
+
+  close(){
+    this.confirm = false
+    this.Titulo =''
+    this.Descripcion =""
+    this.Id = ""
   }
 
 }

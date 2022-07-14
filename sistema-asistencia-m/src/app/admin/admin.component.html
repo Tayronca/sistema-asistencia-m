@@ -1,20 +1,22 @@
 <div class="body">
     <div class="panel" *ngIf="authService.userData as user">
         <div class="data-user" >
+            <img src="../../assets/img/logo.png">
             <h4>{{user.nombres? user.nombres.split(' ')[0]:''}} {{user.apellidos? user.apellidos.split(' ')[0]:''}}</h4>
             <p>{{user.correo}}</p>
             <p>{{user.cedula}}</p>
-            <p>{{user.rol == 'superusuario'? 'Super Usuario':''}} {{user.rol == 'administrativo'? 'Administrador':''}}</p>
+            <p>{{user.rol == 'superusuario'? 'Super Usuario':''}} {{user.rol == 'administrativo'? 'Administrador':''}} {{user.rol == 'controlador'? 'Director Académico':''}} </p>
         </div>
         <ul class="sub-menu" >
-            <li *ngIf="user.rol == 'superusuario'" [routerLink]="['/admin/users']">Usuarios</li>
-            <li *ngIf="user.rol == 'superusuario'" [routerLink]="['/admin/docentes']">Docentes</li>
-            <li *ngIf="user.rol == 'superusuario' || user.rol == 'proveedor'" [routerLink]="['/admin/fichas']">Fichas Zoom</li>
-            <li *ngIf="user.rol == 'superusuario' || user.rol == 'administrativo'" [routerLink]="['/admin/asistencia']">Matriz de Asistencia</li>
-            <li *ngIf="user.rol == 'superusuario' || user.rol == 'controlador'" [routerLink]="['/admin/reportes']">Documentos generados</li>
+            <li  [routerLink]="['/admin']"><i class="fa-solid fa-home"></i> Home</li>
+            <li *ngIf="user.rol == 'superusuario'" [routerLink]="['/admin/users']"><i class="fa-solid fa-users"></i> Usuarios</li>
+            <li *ngIf="user.rol == 'superusuario'" [routerLink]="['/admin/docentes']"><i class="fa-solid fa-user-graduate"></i> Docentes</li>
+            <li *ngIf="user.rol == 'superusuario' || user.rol == 'proveedor'" [routerLink]="['/admin/fichas']"><i class="fa-solid fa-file-circle-plus"></i> Fichas Zoom</li>
+            <li *ngIf="user.rol == 'superusuario' || user.rol == 'administrativo'" [routerLink]="['/admin/asistencia']"><i class="fa-solid fa-file-circle-check"></i> Matriz de Asistencia</li>
+            <li *ngIf="user.rol == 'superusuario' || user.rol == 'controlador'" [routerLink]="['/admin/reportes']"><i class="fa-solid fa-file-lines"></i> Documentos generados</li>
         </ul>
         
-        <button class="btn btn-sesion" (click)="authService.SignOut()">Cerrar Session</button>
+        <button class="btn btn-sesion" (click)="authService.SignOut()"><i class="fa-solid fa-power-off"></i> Cerrar Session</button>
     </div>
 
     <div class="sub-body">

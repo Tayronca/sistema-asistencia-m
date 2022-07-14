@@ -1,11 +1,5 @@
 <h2>Nueva Matriz de asistencia Docente</h2>
 <br>
-<!--<div class="input-group">
-    <h4>Docente</h4>
-    <select [(ngModel)]="IdDocente" (change)="getDocente()">
-        <option *ngFor="let x of docentes" [value]="x.IdDocente">{{x.Apellidos}} {{x.Nombres}} - {{x.Cedula}} </option>
-    </select>
-</div>-->
 
 
 
@@ -17,84 +11,110 @@
     </div>
 </div>
 
-<h4 *ngIf="Matriz.Docentes.length>0">Periódo Académico - {{dateFormat(fechaInicio,'MMMM')}} al {{dateFormat(fechaFin,'MMMM')}}
+
+
+<h4 *ngIf="Matriz.Docentes.length>0">Periódo Académico - {{dateFormat(fechaInicio,'MMMM')}} al
+    {{dateFormat(fechaFin,'MMMM')}}
     {{dateFormat(fechaFin,'YYYY')}} </h4>
-    
+
 <div class="matriz" *ngIf="Matriz.Docentes.length>0">
-
+    <br>
     <div class="cronograma-semanal" *ngFor="let docente of Matriz.Docentes">
-        <h3>{{docente.Nombre}}</h3>
-        <h3>{{docente.Cedula}}</h3>
-        <h5>{{docente.Facultad}}</h5>
-        <h5>TP</h5>
-        <br>
-
-
-        <p>Horas Semanales de Referencia</p>
-        <br>
-        <table class="table">
-            <thead>
-                <th>L</th>
-                <th>M</th>
-                <th>M</th>
-                <th>J</th>
-                <th>V</th>
-                <th>S</th>
-                <th>Total Smnl.</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{docente.Referencia['lunes']}}</td>
-                    <td>{{docente.Referencia['martes']}}</td>
-                    <td>{{docente.Referencia['miércoles']}}</td>
-                    <td>{{docente.Referencia['jueves']}}</td>
-                    <td>{{docente.Referencia['viernes']}}</td>
-                    <td>{{docente.Referencia['sábado']}}</td>
-                    <td>{{docente.Referencia.Total}} Hrs.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div  class="flex c-semanas">
-            <div class="table-matriz"  *ngFor="let x of docente.Semanas; let i = index">
-                <h4>Semana {{i+1}}</h4>
-                <table class="table ">
-                    <thead class="color-head2">
-                        <td>L{{x['lunes']?.Fecha}}</td>
-                        <td>M{{x['martes']?.Fecha}}</td>
-                        <td>M{{x['miércoles']?.Fecha}}</td>
-                        <td>J{{x['jueves']?.Fecha}}</td>
-                        <td>V{{x['viernes']?.Fecha}}</td>
-                        <td>S{{x['sábado']?.Fecha}}</td>
-                    </thead>
-                    <tbody>
-                       <tr>
-                        <td [class]="x['lunes']?.Tema?'round':''" [title]="x['lunes']?.Tema">{{x['lunes']?.Total}}</td>
-                        <td [class]="x['martes']?.Tema?'round':''" [title]="x['martes']?.Tema">{{x['martes']?.Total}} </td>
-                        <td [class]="x['miércoles']?.Tema?'round':''" [title]="x['miércoles']?.Tema">{{x['miércoles']?.Total}} </td>
-                        <td [class]="x['jueves']?.Tema?'round':''" [title]="x['jueves']?.Tema">{{x['jueves']?.Total}}</td>
-                        <td [class]="x['viernes']?.Tema?'round':''" [title]="x['viernes']?.Tema">{{x['viernes']?.Total}} </td>
-                        <td [class]="x['sábado']?.Tema?'round':''" [title]="x['sábado']?.Tema">{{x['sábado']?.Total}} </td>
-                       </tr>
-                    </tbody>
-                </table>
+        <div class="d-docente-m" (click)="showDocente(docente.IdDocente)">
+           <div>
+                <p><b>{{docente.Nombre}}</b></p>
+                <p>{{docente.Cedula}}</p>
+           </div>
+           <div>
+                <p><b>Observaciones:</b></p>
+                <p>{{docente.Observaciones}}</p>
+                
+            </div>
+            <div >
+                <p>Total Hrs. Mes: <b> {{docente.TotalHorasMes}} Hrs</b></p>
+                
             </div>
         </div>
-        
-        <div class="matriz">
-            <div>
-                <p>Total Horas {{dateFormat(fechaInicio,'DD-MM-yyyy')}} al {{dateFormat(fechaFin,'DD-MM-yyyy')}}:</p>
-                 <h2> {{docente.TotalHorasMes}} Hrs.</h2>
-            </div>
-        </div>
-        <br>
-        
-        <div class="input-group">
-            <h4>Observaciones  <span *ngIf="docente.Observaciones && !valid"  class="error">*</span></h4>
-            <textarea rows="5" [(ngModel)]="docente.Observaciones" required></textarea>
-        </div>
-   
+        <div  [class]="docente.IdDocente == IdShow ? 'active-docente':'inactive-docente'">
+            <p>{{docente.Facultad}}</p>
+            <p>TP</p>
+            <br>
+            <p>Horas Semanales de Referencia</p>
+            <br>
+            <table class="table">
+                <thead>
+                    <th>L</th>
+                    <th>M</th>
+                    <th>M</th>
+                    <th>J</th>
+                    <th>V</th>
+                    <th>S</th>
+                    <th>Total Smnl.</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{docente.Referencia['lunes']}}</td>
+                        <td>{{docente.Referencia['martes']}}</td>
+                        <td>{{docente.Referencia['miércoles']}}</td>
+                        <td>{{docente.Referencia['jueves']}}</td>
+                        <td>{{docente.Referencia['viernes']}}</td>
+                        <td>{{docente.Referencia['sábado']}}</td>
+                        <td>{{docente.Referencia.Total}} Hrs.</td>
+                    </tr>
+                </tbody>
+            </table>
 
+            <div class="flex c-semanas">
+                <div class="table-matriz" *ngFor="let x of docente.Semanas; let i = index">
+                    <h4>Semana {{i+1}}</h4>
+                    <table class="table ">
+                        <thead class="color-head2">
+                            <td>L{{x['lunes']?.Fecha}}</td>
+                            <td>M{{x['martes']?.Fecha}}</td>
+                            <td>M{{x['miércoles']?.Fecha}}</td>
+                            <td>J{{x['jueves']?.Fecha}}</td>
+                            <td>V{{x['viernes']?.Fecha}}</td>
+                            <td>S{{x['sábado']?.Fecha}}</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td [class]="x['lunes']?.Tema?'round':''">
+                                    {{x['lunes']?.Total}} <span *ngIf="x['lunes']?.Tema" class="tooltip">{{x['lunes']?.Tema}}</span></td>
+                                <td [class]="x['martes']?.Tema?'round':''" >
+                                    {{x['martes']?.Total}} <span *ngIf="x['martes']?.Tema" class="tooltip">{{x['martes']?.Tema}}</span></td>
+                                <td [class]="x['miércoles']?.Tema?'round':''" >
+                                    {{x['miércoles']?.Total}} <span *ngIf="x['miércoles']?.Tema" class="tooltip">{{x['miércoles']?.Tema}}</span></td>
+                                <td [class]="x['jueves']?.Tema?'round':''" >
+                                    {{x['jueves']?.Total}} <span *ngIf="x['jueves']?.Tema" class="tooltip">{{x['jueves']?.Tema}}</span></td>
+                                <td [class]="x['viernes']?.Tema?'round':''" >
+                                    {{x['viernes']?.Total}} <span *ngIf="x['viernes']?.Tema" class="tooltip">{{x['viernes']?.Tema}}</span></td>
+                                <td [class]="x['sábado']?.Tema?'round':''">
+                                    {{x['sábado']?.Total}} <div class="tooltip"><p *ngFor="let tema of x['sábado']?.Tema.split(';')" >{{tema}}</p></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="matriz">
+                <div>
+                    <p>Total Horas {{dateFormat(fechaInicio,'DD-MM-yyyy')}} al {{dateFormat(fechaFin,'DD-MM-yyyy')}}:
+                    </p>
+                    <h2> {{docente.TotalHorasMes}} Hrs.</h2>
+                </div>
+            </div>
+            <br>
+
+            <div class="input-group">
+                <h4>Observaciones <span *ngIf="docente.Observaciones && !valid" class="error">*</span></h4>
+                <textarea rows="5" [(ngModel)]="docente.Observaciones" required></textarea>
+            </div>
+            <div class="input-group flex flex-end">
+                <button class="btn btn-confirm" (click)="showDocente(docente.IdDocente)">Ok</button>
+            </div>
+
+
+        </div>
     </div>
 
 </div>

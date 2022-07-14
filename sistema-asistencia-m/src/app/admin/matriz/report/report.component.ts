@@ -36,7 +36,6 @@ export class ReportComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.Matriz)
   }
 
   
@@ -50,7 +49,7 @@ export class ReportComponent implements OnInit {
       if(this.Matriz.IdMatriz){
         var user = this.authService.userData as User
         this.Matriz.Aprobado = true
-        this.Matriz.UsuarioAprobado = user.nombres +" "+user.apellidos
+        this.Matriz.UsuarioAprobado =  user.titulo.split('.')[0] +". "+  user.nombres +" "+user.apellidos
 
         this.db.firestore.collection('matriz').doc(this.Matriz.IdMatriz).update(this.Matriz).then(()=>{
           this.Close.emit()

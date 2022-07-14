@@ -23,6 +23,7 @@ export class MatrizComponent implements OnInit {
   Descripcion:string = ''
 
   searchName:string=''
+  listaMatrizSearch:Array<Matriz>=[]
 
   @ViewChild('file') file: any;
   fileName:string=''
@@ -33,10 +34,8 @@ export class MatrizComponent implements OnInit {
  fechaInicio:string=''
  fechaFin:string =''
 
- confirm:boolean=false
- TituloConfirm:string =''
- DescripcionConfirm:string = ''
- Id:string =''
+
+
  mes:number=1
  years:Array<number>=[]
  year:number=0
@@ -57,6 +56,11 @@ export class MatrizComponent implements OnInit {
    Recibido: false,
    Docentes: []
  }
+
+ confirm:boolean=false
+ TituloConfirm:string =''
+ DescripcionConfirm:string = ''
+ Id:string =''
 
   constructor(
     private db:AngularFirestore,
@@ -91,6 +95,8 @@ export class MatrizComponent implements OnInit {
 
   this.listaMatriz = []
 
+  var lista:Array<Matriz> = []
+
     await this.db.firestore.collection('matriz').where('Aprobado','==',false).get().then(resp=>{
 
       if(resp.docs.length>0){
@@ -98,12 +104,13 @@ export class MatrizComponent implements OnInit {
         resp.docs.map(m=>{
             var matriz = m.data() as Matriz
 
-            this.listaMatriz.push(matriz)
+            lista.push(matriz)
         })
 
       }
     })
 
+    this.listaMatriz = await lista.sort((a,b)=>b.Codigo.localeCompare(a.Codigo))
      
   }
 
@@ -157,4 +164,34 @@ export class MatrizComponent implements OnInit {
         this.getMatriz()
       }
 
+      delete(x:Matriz){
+        
+        this.Id = x.IdMatriz
+        this.Titulo="¿Está seguro de eliminar la matriz "+ x.Codigo+" ?"
+        this.DescripcionConfirm="La matriz será eliminada del sistema"
+        this.confirm = true
+        
+      }
+
+     async confirmDelete(Id:any){
+          if(Id){
+
+           await this.db.firestore.collection('matriz').doc(Id).delete()
+            .then(()=>{
+                this.getMatriz()
+            }).catch(err=>{console.log(err)})
+
+            this.closeConfirm()
+          }
+      }
+
+      closeConfirm(){
+        this.Id=''
+        this.confirm = false
+        this.Titulo=""
+        this.DescripcionConfirm=""
+      }
+
+
+      
 }
