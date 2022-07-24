@@ -92,4 +92,16 @@ export class EditComponent implements OnInit {
      })
   }
 
+  number(event:any){
+
+    console.log(event.charCode)
+    if(event.charCode >= 48 && event.charCode <= 57){
+
+        return true
+    }
+    
+    return false
+  }
+ 
+
 }

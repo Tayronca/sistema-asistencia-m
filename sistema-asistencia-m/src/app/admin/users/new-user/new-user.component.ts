@@ -102,6 +102,17 @@ export class NewUserComponent implements OnInit {
     this.cedula = ''
     this.titulo = ''
   }
+
+  number(event:any){
+
+    console.log(event.charCode)
+    if(event.charCode >= 48 && event.charCode <= 57){
+
+        return true
+    }
+    
+    return false
+  }
  
 
 }

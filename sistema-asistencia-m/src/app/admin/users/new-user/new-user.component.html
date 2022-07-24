@@ -15,7 +15,7 @@
         </div>
         <div class="input-group">
             <h4>Cédula  <span *ngIf="!cedula && !valid"  class="error">*</span></h4>
-            <input type="text" placeholder="1550153793" [(ngModel)]="cedula" required>
+            <input type="text" placeholder="1550153793" [(ngModel)]="cedula" (keypress)="number($event)" required>
         </div>
         <div class="input-group">
             <h4>Correo <span *ngIf="!correo && !valid"  class="error">*</span></h4>

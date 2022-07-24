@@ -140,6 +140,18 @@ export class NewComponent implements OnInit {
       Materias:[]
     }
   }
+
+  number(event:any){
+
+    console.log(event.charCode)
+    if(event.charCode >= 48 && event.charCode <= 57){
+
+        return true
+    }
+    
+    return false
+  }
+ 
  
 
 }

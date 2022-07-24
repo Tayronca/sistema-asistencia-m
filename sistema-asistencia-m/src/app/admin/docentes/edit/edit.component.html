@@ -12,7 +12,7 @@
         </div>
         <div class="input-group">
             <h4>Cédula  <span *ngIf="!docente.Cedula && !valid"  class="error">*</span></h4>
-            <input type="text" placeholder="1550153793" [(ngModel)]="docente.Cedula" required>
+            <input type="text" placeholder="1550153793" [(ngModel)]="docente.Cedula" (keypress)="number($event)" required>
         </div>
         <div class="input-group">
             <h4>Correo <span *ngIf="!docente.Correo && !valid"  class="error">*</span></h4>
@@ -21,9 +21,14 @@
 
     </div>
     <div class="column-50">
+
         <div class="input-group">
             <h4>Apellidos <span *ngIf="!docente.Apellidos && !valid"  class="error">*</span></h4>
             <input type="text" placeholder="Casco Acurio" [(ngModel)]="docente.Apellidos" required>
+        </div>
+        <div class="input-group column-50">
+            <h4>Teléfono <span *ngIf="!docente.Telefono && !valid"  class="error">*</span></h4>
+            <input type="text" placeholder="+593 978 565 985" [(ngModel)]="docente.Telefono" (keypress)="number($event)" required>
         </div>
         <div class="input-group flex flex-end">
             <button class="btn btn-confirm" (click)="update()">Actualizar</button>

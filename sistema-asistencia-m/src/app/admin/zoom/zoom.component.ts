@@ -142,12 +142,14 @@ export class ZoomComponent implements OnInit {
            clase.Cedula = Docente.Cedula
 
         }
+
+        await this.datosExcel.push(clase)
      
      }
 
   
 
-     await this.datosExcel.push(clase)
+   
 
     
   }
