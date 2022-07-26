@@ -28,7 +28,7 @@
         </div>
         <div class="input-group column-50">
             <h4>Teléfono <span *ngIf="!docente.Telefono && !valid"  class="error">*</span></h4>
-            <input type="text" placeholder="+593 978 565 985" [(ngModel)]="docente.Telefono" (keypress)="number($event)" required>
+            <input type="text" placeholder="+593 978 565 985" [(ngModel)]="docente.Telefono" (keypress)="number($event)" required> 
         </div>
         <div class="input-group flex flex-end">
             <button class="btn btn-confirm" (click)="update()">Actualizar</button>
