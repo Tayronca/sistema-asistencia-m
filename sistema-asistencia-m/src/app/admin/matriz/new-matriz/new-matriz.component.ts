@@ -260,8 +260,6 @@ export class NewMatrizComponent implements OnInit {
 
   getNameDocente() {
     var docente = this.docentes.find(e => e.IdDocente == this.IdDocente)
-
-
     return docente?.Apellidos + " " + docente?.Nombres
   }
 
@@ -345,6 +343,8 @@ export class NewMatrizComponent implements OnInit {
 
                     semana[d].Tema += zoom.Tema+ " de "+horaInicio+ " - "+horaFin+ " Hrs. Total: "+total+" Hrs. ; "
                   }
+
+                  semana[d].Color ='green'
                   
 
                   this.totalMes += Math.round(parseFloat(data.Duracion.toString()) / 60)

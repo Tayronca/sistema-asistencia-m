@@ -8,6 +8,7 @@ moment.locale('es')
 import { async } from '@firebase/util';
 import { Docente } from '../../docentes/Docente';
 import { Facultad } from '../../docentes/Facultad';
+import { Router } from '@angular/router';
 
 
 
@@ -64,6 +65,7 @@ export class MatrizComponent implements OnInit {
 
   constructor(
     private db:AngularFirestore,
+    private router:Router
     
   ) { }
 
@@ -190,6 +192,11 @@ export class MatrizComponent implements OnInit {
         this.confirm = false
         this.Titulo=""
         this.DescripcionConfirm=""
+      }
+
+
+      edit(Id:String){
+        this.router.navigate(['/admin/asistencia/edit/'+Id])
       }
 
 

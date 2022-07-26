@@ -1,0 +1,261 @@
+<div *ngIf="Matriz.IdMatriz!=''">
+
+
+
+    <h2>Código: {{Matriz.Codigo}}</h2>
+    <br>
+
+
+    <h4 *ngIf="Matriz.Docentes.length>0">Periódo Académico - {{dateFormat(Matriz.FechaInicio,'DD/MM/yyyy')}} al
+        {{dateFormat(Matriz.FechaFin,'DD/MM/yyyy')}}
+        {{dateFormat(Matriz.FechaFin,'YYYY')}} </h4>
+
+    <div class="matriz" *ngIf="Matriz.Docentes.length>0">
+        <br>
+        <div class="cronograma-semanal" *ngFor="let docente of Matriz.Docentes; let numDocente = index">
+            <div class="d-docente-m" (click)="showDocente(docente.IdDocente)">
+                <div>
+                    <p><b>{{docente.Nombre}}</b></p>
+                    <p>{{docente.Cedula}}</p>
+                </div>
+                <div>
+                    <p><b>Observaciones:</b></p>
+                    <p>{{docente.Observaciones}}</p>
+
+                </div>
+                <div>
+                    <p>Total Hrs. Mes: <b> {{docente.TotalHorasMes}} Hrs</b></p>
+
+                </div>
+            </div>
+            <div [class]="docente.IdDocente == IdShow ? 'active-docente':'inactive-docente'">
+                <p>{{docente.Facultad}}</p>
+                <p>TP</p>
+                <br>
+                <p>Horas Semanales de Referencia</p>
+                <br>
+                <table class="table">
+                    <thead>
+                        <th>L</th>
+                        <th>M</th>
+                        <th>M</th>
+                        <th>J</th>
+                        <th>V</th>
+                        <th>S</th>
+                        <th>Total Smnl.</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input (change)="addHourRef(numDocente)" type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['lunes']"></td>
+                            <td><input (change)="addHourRef(numDocente)" type="number"  class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['martes']"></td>
+                            <td><input (change)="addHourRef(numDocente)" type="number"  class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['miércoles']"></td>
+                            <td><input (change)="addHourRef(numDocente)" type="number"  class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['jueves']"></td>
+                            <td><input (change)="addHourRef(numDocente)"  type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['viernes']"></td>
+                            <td><input (change)="addHourRef(numDocente)" type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['sábado']"></td>
+                            <td>{{docente.Referencia.Total}} Hrs.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="flex c-semanas">
+                    <div class="table-matriz" *ngFor="let x of docente.Semanas; let i = index">
+                        <h4>Semana {{i+1}}</h4>
+                        <table class="table ">
+                            <thead class="color-head2">
+                                <td>L{{x['lunes']?.Fecha}}</td>
+                                <td>M{{x['martes']?.Fecha}}</td>
+                                <td>M{{x['miércoles']?.Fecha}}</td>
+                                <td>J{{x['jueves']?.Fecha}}</td>
+                                <td>V{{x['viernes']?.Fecha}}</td>
+                                <td>S{{x['sábado']?.Fecha}}</td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td [class]="x['lunes']?.Tema?'':''">
+                                        <div>
+                                            <input (change)="addHourRefMes(numDocente)" *ngIf="x['lunes']?.Fecha"  type="number" [class]="x['lunes']?.Total  ? 'input-calendar ' +  x['lunes']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['lunes'].Total ">
+                                        </div>
+                                        <div>
+                                            <span (click)="addTema(x['lunes']?.Fecha)" *ngIf="!x['lunes']?.Tema && x['lunes']?.Total " class="tema-btn">Add Tema</span>
+                                        </div>
+                                        <div>
+                                            <span *ngIf="x['lunes']?.Total " (click)="color(x['lunes']?.Fecha)"  class="tema-btn">Color</span>
+                                        </div>
+                                              
+
+                                        <span *ngIf="x['lunes']?.Tema"
+                                            class="tooltip">{{x['lunes']?.Tema}}</span>
+                                        <div>
+                                            <input *ngIf="x['lunes']?.Fecha == temaId" [(ngModel)]="x['lunes'].Tema" (change)="hideTema()">
+                                        </div>
+
+                                        <div class="colors" *ngIf="x['lunes']?.Fecha == colorId">
+                                                <div (click)="setColor(numDocente,i,'lunes','red')" class="red"></div>
+                                                <div  (click)="setColor(numDocente,i,'lunes','pink')" class="pink"></div>
+                                                <div  (click)="setColor(numDocente,i,'lunes','green')" class="green"></div>
+                                                <div  (click)="setColor(numDocente,i,'lunes','yellow')" class="yellow"></div>
+                                        </div>
+
+                                    </td>
+                                    <td [class]="x['martes']?.Tema?'':''">
+                                        <div>
+                                            <input (change)="addHourRefMes(numDocente)" *ngIf="x['martes']?.Fecha"  type="number" [class]="x['martes']?.Total  ? 'input-calendar ' +  x['martes']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['martes'].Total ">
+                                        </div>
+                                        <div>
+                                            <span (click)="addTema(x['martes']?.Fecha)" *ngIf="!x['martes']?.Tema && x['martes']?.Total " class="tema-btn">Add Tema</span>
+                                        </div>
+                                        <div>
+                                            <span *ngIf="x['martes']?.Total " (click)="color(x['martes']?.Fecha)"  class="tema-btn">Color</span>
+                                        </div>
+                                              
+
+                                        <span *ngIf="x['martes']?.Tema"
+                                            class="tooltip">{{x['martes']?.Tema}}</span>
+                                        <div>
+                                            <input *ngIf="x['martes']?.Fecha == temaId" [(ngModel)]="x['martes'].Tema" (change)="hideTema()">
+                                        </div>
+
+                                        <div class="colors" *ngIf="x['martes']?.Fecha == colorId">
+                                                <div (click)="setColor(numDocente,i,'martes','red')" class="red"></div>
+                                                <div  (click)="setColor(numDocente,i,'martes','pink')" class="pink"></div>
+                                                <div  (click)="setColor(numDocente,i,'martes','green')" class="green"></div>
+                                                <div  (click)="setColor(numDocente,i,'martes','yellow')" class="yellow"></div>
+                                        </div>
+                                    </td>
+                                    <td [class]="x['miércoles']?.Tema?'':''">
+                                        <div>
+                                            <input (change)="addHourRefMes(numDocente)" *ngIf="x['miércoles']?.Fecha"  type="number" [class]="x['miércoles']?.Total  ? 'input-calendar ' +  x['miércoles']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['miércoles'].Total ">
+                                        </div>
+                                        <div>
+                                            <span (click)="addTema(x['miércoles']?.Fecha)" *ngIf="!x['miércoles']?.Tema && x['miércoles']?.Total " class="tema-btn">Add Tema</span>
+                                        </div>
+                                        <div>
+                                            <span *ngIf="x['miércoles']?.Total " (click)="color(x['miércoles']?.Fecha)"  class="tema-btn">Color</span>
+                                        </div>
+                                              
+
+                                        <span *ngIf="x['miércoles']?.Tema"
+                                            class="tooltip">{{x['miércoles']?.Tema}}</span>
+                                        <div>
+                                            <input *ngIf="x['miércoles']?.Fecha == temaId" [(ngModel)]="x['miércoles'].Tema" (change)="hideTema()">
+                                        </div>
+
+                                        <div class="colors" *ngIf="x['miércoles']?.Fecha == colorId">
+                                                <div (click)="setColor(numDocente,i,'miércoles','red')" class="red"></div>
+                                                <div  (click)="setColor(numDocente,i,'miércoles','pink')" class="pink"></div>
+                                                <div  (click)="setColor(numDocente,i,'miércoles','green')" class="green"></div>
+                                                <div  (click)="setColor(numDocente,i,'miércoles','yellow')" class="yellow"></div>
+                                        </div>
+                                    </td>
+                                    <td [class]="x['jueves']?.Tema?'':''">
+                                        <div>
+                                            <input (change)="addHourRefMes(numDocente)" *ngIf="x['jueves']?.Fecha"  type="number" [class]="x['jueves']?.Total  ? 'input-calendar ' +  x['jueves']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['jueves'].Total ">
+                                        </div>
+                                        <div>
+                                            <span (click)="addTema(x['jueves']?.Fecha)" *ngIf="!x['jueves']?.Tema && x['jueves']?.Total " class="tema-btn">Add Tema</span>
+                                        </div>
+                                        <div>
+                                            <span *ngIf="x['jueves']?.Total " (click)="color(x['jueves']?.Fecha)"  class="tema-btn">Color</span>
+                                        </div>
+                                              
+
+                                        <span *ngIf="x['jueves']?.Tema"
+                                            class="tooltip">{{x['jueves']?.Tema}}</span>
+                                        <div>
+                                            <input *ngIf="x['jueves']?.Fecha == temaId" [(ngModel)]="x['jueves'].Tema" (change)="hideTema()">
+                                        </div>
+
+                                        <div class="colors" *ngIf="x['jueves']?.Fecha == colorId">
+                                                <div (click)="setColor(numDocente,i,'jueves','red')" class="red"></div>
+                                                <div  (click)="setColor(numDocente,i,'jueves','pink')" class="pink"></div>
+                                                <div  (click)="setColor(numDocente,i,'jueves','green')" class="green"></div>
+                                                <div  (click)="setColor(numDocente,i,'jueves','yellow')" class="yellow"></div>
+                                        </div>
+                                    </td>
+                                    <td [class]="x['viernes']?.Tema?'':''">
+                                        <div>
+                                            <input (change)="addHourRefMes(numDocente)" *ngIf="x['viernes']?.Fecha"  type="number" [class]="x['viernes']?.Total  ? 'input-calendar ' +  x['viernes']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['viernes'].Total ">
+                                        </div>
+                                        <div>
+                                            <span (click)="addTema(x['viernes']?.Fecha)" *ngIf="!x['viernes']?.Tema && x['viernes']?.Total " class="tema-btn">Add Tema</span>
+                                        </div>
+                                        <div>
+                                            <span *ngIf="x['viernes']?.Total " (click)="color(x['viernes']?.Fecha)"  class="tema-btn">Color</span>
+                                        </div>
+                                              
+
+                                        <span *ngIf="x['viernes']?.Tema"
+                                            class="tooltip">{{x['viernes']?.Tema}}</span>
+                                        <div>
+                                            <input *ngIf="x['viernes']?.Fecha == temaId" [(ngModel)]="x['viernes'].Tema" (change)="hideTema()">
+                                        </div>
+
+                                        <div class="colors" *ngIf="x['viernes']?.Fecha == colorId">
+                                                <div (click)="setColor(numDocente,i,'viernes','red')" class="red"></div>
+                                                <div  (click)="setColor(numDocente,i,'viernes','pink')" class="pink"></div>
+                                                <div  (click)="setColor(numDocente,i,'viernes','green')" class="green"></div>
+                                                <div  (click)="setColor(numDocente,i,'viernes','yellow')" class="yellow"></div>
+                                        </div>
+                                    </td>
+                                    <td [class]="x['sábado']?.Tema?'':''">
+                                        <div>
+                                            <input (change)="addHourRefMes(numDocente)" *ngIf="x['sábado']?.Fecha"  type="number" [class]="x['sábado']?.Total  ? 'input-calendar ' +  x['sábado']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['sábado'].Total ">
+                                        </div>
+                                        <div>
+                                            <span (click)="addTema(x['sábado']?.Fecha)" *ngIf="!x['sábado']?.Tema && x['sábado']?.Total " class="tema-btn">Add Tema</span>
+                                        </div>
+                                        <div>
+                                            <span *ngIf="x['sábado']?.Total " (click)="color(x['sábado']?.Fecha)"  class="tema-btn">Color</span>
+                                        </div>
+                                              
+
+                                        <span *ngIf="x['sábado']?.Tema"
+                                            class="tooltip">{{x['sábado']?.Tema}}</span>
+                                        <div>
+                                            <input *ngIf="x['sábado']?.Fecha == temaId" [(ngModel)]="x['sábado'].Tema" (change)="hideTema()">
+                                        </div>
+
+                                        <div class="colors" *ngIf="x['sábado']?.Fecha == colorId">
+                                                <div (click)="setColor(numDocente,i,'sábado','red')" class="red"></div>
+                                                <div  (click)="setColor(numDocente,i,'sábado','pink')" class="pink"></div>
+                                                <div  (click)="setColor(numDocente,i,'sábado','green')" class="green"></div>
+                                                <div  (click)="setColor(numDocente,i,'sábado','yellow')" class="yellow"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="matriz">
+                    <div>
+                        <p>Total Horas {{dateFormat(Matriz.FechaInicio,'DD-MM-yyyy')}} al
+                            {{dateFormat(Matriz.FechaFin,'DD-MM-yyyy')}}:
+                        </p>
+                        <h2> {{docente.TotalHorasMes}} Hrs.</h2>
+                    </div>
+                </div>
+                <br>
+
+                <div class="input-group">
+                    <h4>Observaciones <span *ngIf="docente.Observaciones && !valid" class="error">*</span></h4>
+                    <textarea rows="5" [(ngModel)]="docente.Observaciones" required></textarea>
+                </div>
+                <div class="input-group flex flex-end">
+                    <button class="btn btn-confirm" (click)="showDocente(docente.IdDocente)">Ok</button>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="Matriz.Docentes.length>0" class="input-group flex flex-end">
+        <button class="btn btn-cancel" (click)="cancelar()">Cancelar</button>
+        <button class="btn btn-confirm" (click)="save()">Actualizar a Matriz</button>
+    </div>
+    <br>
+
+</div>

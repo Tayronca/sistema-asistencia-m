@@ -375,7 +375,7 @@ select:focus{
     background: #fff;
     border: 1px solid #dabd00;
     left: 0;
-    top: 0;
+    top: 65px;
     width: 120px;
     border-radius: 5px;
     display: none;
@@ -434,4 +434,50 @@ select:focus{
 .c-img-home img{
     width: 600px;
     margin: 20px 0;
+}
+
+.input-calendar{
+    border: none;
+    width: 40px;
+    background: #eee;
+    padding: 5px;
+    text-align: center;
+}
+
+.input-calendar.green{
+    background: #197b0e;
+    color: #fff;
+}
+
+.tema-btn{
+    font-size: 9px;
+    color: #0a6de6;
+    cursor: pointer;
+}
+
+.colors{
+    display: flex;
+}
+
+.colors div{
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.red{
+    background: red;
+}
+
+.pink{
+    background: pink;
+}
+
+.green{
+    background: green;
+}
+
+.yellow{
+    background:#ffdd00;
 }
