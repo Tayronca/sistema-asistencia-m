@@ -11,5 +11,6 @@ export interface DocenteFicha{
     Fichas:Array<zoom>,
     Semanas:Array<any>,
     Referencia:Semana,
+    ReferenciaPresencial:Semana,
     Observaciones: "", 
 }

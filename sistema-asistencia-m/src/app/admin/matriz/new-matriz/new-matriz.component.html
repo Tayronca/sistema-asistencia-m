@@ -39,7 +39,7 @@
             <p>{{docente.Facultad}}</p>
             <p>TP</p>
             <br>
-            <p>Horas Semanales de Referencia</p>
+            <p><b> Horas Semanales de Referencia Virtual</b></p>
             <br>
             <table class="table">
                 <thead>
@@ -60,6 +60,32 @@
                         <td>{{docente.Referencia['viernes']}}</td>
                         <td>{{docente.Referencia['sábado']}}</td>
                         <td>{{docente.Referencia.Total}} Hrs.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+            <p><b> Horas Semanales de Referencia Presencial</b></p>
+            <br>
+            <table class="table presencial">
+                <thead>
+                    <th>L</th>
+                    <th>M</th>
+                    <th>M</th>
+                    <th>J</th>
+                    <th>V</th>
+                    <th>S</th>
+                    <th>Total Smnl.</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{docente.ReferenciaPresencial['lunes']}}</td>
+                        <td>{{docente.ReferenciaPresencial['martes']}}</td>
+                        <td>{{docente.ReferenciaPresencial['miércoles']}}</td>
+                        <td>{{docente.ReferenciaPresencial['jueves']}}</td>
+                        <td>{{docente.ReferenciaPresencial['viernes']}}</td>
+                        <td>{{docente.ReferenciaPresencial['sábado']}}</td>
+                        <td>{{docente.ReferenciaPresencial.Total}} Hrs.</td>
                     </tr>
                 </tbody>
             </table>

@@ -177,6 +177,11 @@ input:focus,textarea:focus{
     background: #eee;
 }
 
+.table.presencial thead{
+    background: #0a6de6;
+    color: #fff;
+}
+
 
 .column-50{
     width: 50%;

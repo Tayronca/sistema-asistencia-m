@@ -28,6 +28,10 @@ export class EditMatrizComponent implements OnInit {
     Total: 0
   }
 
+  referenciaPresencial:Semana={
+    Total:0
+  }
+
   semanas: Array<any> = []
   totalMes:number=0
 
@@ -142,55 +146,74 @@ export class EditMatrizComponent implements OnInit {
   }
 
   //agregar horas de referencia
-  addHourRef(index:number){
-    console.log(this.Matriz.Docentes[index].Referencia)
+  addHourRefPresencial(index:number){
 
-   var lu = this.Matriz.Docentes[index].Referencia['lunes'] ?this.Matriz.Docentes[index].Referencia['lunes']:0
-   var ma = this.Matriz.Docentes[index].Referencia['martes'] ? this.Matriz.Docentes[index].Referencia['martes']:0
-   var mi = this.Matriz.Docentes[index].Referencia['miércoles'] ? this.Matriz.Docentes[index].Referencia['miércoles']: 0
-   var ju = this.Matriz.Docentes[index].Referencia['jueves'] ? this.Matriz.Docentes[index].Referencia['jueves']: 0
-   var vi = this.Matriz.Docentes[index].Referencia['viernes'] ? this.Matriz.Docentes[index].Referencia['viernes']:0
-   var sa = this.Matriz.Docentes[index].Referencia['sábado'] ? this.Matriz.Docentes[index].Referencia['sábado']: 0
+   var lu = this.Matriz.Docentes[index].ReferenciaPresencial['lunes'] ?this.Matriz.Docentes[index].ReferenciaPresencial['lunes']:0
+   var ma = this.Matriz.Docentes[index].ReferenciaPresencial['martes'] ? this.Matriz.Docentes[index].ReferenciaPresencial['martes']:0
+   var mi = this.Matriz.Docentes[index].ReferenciaPresencial['miércoles'] ? this.Matriz.Docentes[index].ReferenciaPresencial['miércoles']: 0
+   var ju = this.Matriz.Docentes[index].ReferenciaPresencial['jueves'] ? this.Matriz.Docentes[index].ReferenciaPresencial['jueves']: 0
+   var vi = this.Matriz.Docentes[index].ReferenciaPresencial['viernes'] ? this.Matriz.Docentes[index].ReferenciaPresencial['viernes']:0
+   var sa = this.Matriz.Docentes[index].ReferenciaPresencial['sábado'] ? this.Matriz.Docentes[index].ReferenciaPresencial['sábado']: 0
 
-    this.Matriz.Docentes[index].Referencia.Total = lu+ma+mi+ju+vi+sa
+    this.Matriz.Docentes[index].ReferenciaPresencial.Total = lu+ma+mi+ju+vi+sa
     this.Matriz.Docentes[index].TotalHorasSemanal = lu+ma+mi+ju+vi+sa
    
   }
 
-  addHourRefMes(index:number){
+ 
 
-    var horasMes = 0
-    
-    this.Matriz.Docentes[index].Semanas.map(e=>{
+  //referencia presencial
+ //agregar horas de referencia
+ addHourRef(index:number){
 
-        if(e['lunes']){
-          horasMes += e['lunes'].Total
-        }
+  var lu = this.Matriz.Docentes[index].Referencia['lunes'] ?this.Matriz.Docentes[index].Referencia['lunes']:0
+  var ma = this.Matriz.Docentes[index].Referencia['martes'] ? this.Matriz.Docentes[index].Referencia['martes']:0
+  var mi = this.Matriz.Docentes[index].Referencia['miércoles'] ? this.Matriz.Docentes[index].Referencia['miércoles']: 0
+  var ju = this.Matriz.Docentes[index].Referencia['jueves'] ? this.Matriz.Docentes[index].Referencia['jueves']: 0
+  var vi = this.Matriz.Docentes[index].Referencia['viernes'] ? this.Matriz.Docentes[index].Referencia['viernes']:0
+  var sa = this.Matriz.Docentes[index].Referencia['sábado'] ? this.Matriz.Docentes[index].Referencia['sábado']: 0
 
-        if(e['martes']){
-          horasMes += e['martes'].Total
-        }
+   this.Matriz.Docentes[index].Referencia.Total = lu+ma+mi+ju+vi+sa
+   this.Matriz.Docentes[index].TotalHorasSemanal = lu+ma+mi+ju+vi+sa
+  
+ }
 
-        if(e['miércoles']){
-          horasMes += e['miércoles'].Total
-        }
-        if(e['jueves']){
-          horasMes += e['jueves'].Total
-        }
-        if(e['viernes']){
-          horasMes += e['viernes'].Total
-        }
-        if(e['sábado']){
-          horasMes += e['sábado'].Total
-        }
+ addHourRefMes(index:number){
 
-        
-    })
-
-    this.Matriz.Docentes[index].TotalHorasMes = horasMes
-
+   var horasMes = 0
    
-  }
+   this.Matriz.Docentes[index].Semanas.map(e=>{
+
+       if(e['lunes']){
+         horasMes += e['lunes'].Total
+       }
+
+       if(e['martes']){
+         horasMes += e['martes'].Total
+       }
+
+       if(e['miércoles']){
+         horasMes += e['miércoles'].Total
+       }
+       if(e['jueves']){
+         horasMes += e['jueves'].Total
+       }
+       if(e['viernes']){
+         horasMes += e['viernes'].Total
+       }
+       if(e['sábado']){
+         horasMes += e['sábado'].Total
+       }
+
+       
+   })
+
+   this.Matriz.Docentes[index].TotalHorasMes = horasMes
+
+  
+ }
+
+  //
 
   addTema(fecha:string){
 

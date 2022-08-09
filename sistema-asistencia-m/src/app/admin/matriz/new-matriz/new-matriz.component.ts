@@ -27,6 +27,10 @@ export class NewMatrizComponent implements OnInit {
     Total: 0
   }
 
+  ReferenciaPresencial:Semana={
+    Total:0
+  }
+
   semanas: Array<any> = []
   totalMes:number=0
 
@@ -147,6 +151,7 @@ export class NewMatrizComponent implements OnInit {
       TotalHorasSemanal: 0,
       Fichas: [],
       Referencia:{Total:0},
+      ReferenciaPresencial:{Total:0},
       Semanas:[],
       Observaciones: ''
     }

@@ -32,7 +32,7 @@
                 <p>{{docente.Facultad}}</p>
                 <p>TP</p>
                 <br>
-                <p>Horas Semanales de Referencia</p>
+                <p><b> Horas Semanales de Referencia Virtual</b></p>
                 <br>
                 <table class="table">
                     <thead>
@@ -53,6 +53,32 @@
                             <td><input (change)="addHourRef(numDocente)"  type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['viernes']"></td>
                             <td><input (change)="addHourRef(numDocente)" type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.Referencia['sábado']"></td>
                             <td>{{docente.Referencia.Total}} Hrs.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <p><b> Horas Semanales de Referencia Presencial</b></p>
+                <br>
+                <table class="table presencial">
+                    <thead>
+                        <th>L</th>
+                        <th>M</th>
+                        <th>M</th>
+                        <th>J</th>
+                        <th>V</th>
+                        <th>S</th>
+                        <th>Total Smnl.</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input (change)="addHourRefPresencial(numDocente)" type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.ReferenciaPresencial['lunes']"></td>
+                            <td><input (change)="addHourRefPresencial(numDocente)" type="number"  class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.ReferenciaPresencial['martes']"></td>
+                            <td><input (change)="addHourRefPresencial(numDocente)" type="number"  class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.ReferenciaPresencial['miércoles']"></td>
+                            <td><input (change)="addHourRefPresencial(numDocente)" type="number"  class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.ReferenciaPresencial['jueves']"></td>
+                            <td><input (change)="addHourRefPresencial(numDocente)"  type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.ReferenciaPresencial['viernes']"></td>
+                            <td><input (change)="addHourRefPresencial(numDocente)" type="number" class="input-calendar" (keypress)="number($event)" [(ngModel)]="docente.ReferenciaPresencial['sábado']"></td>
+                            <td>{{docente.ReferenciaPresencial.Total}} Hrs.</td>
                         </tr>
                     </tbody>
                 </table>
