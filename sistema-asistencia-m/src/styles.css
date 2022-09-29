@@ -53,6 +53,14 @@ ul{
     width: 100%;
 }
 
+.desc-tema{
+    border: 1px solid #eee;
+    margin: 10px 0 ;
+    font-size: 12px;
+    border-radius: 5px;
+    width: 100%;
+}
+
 .detail input{
     background: none;
     border: none;

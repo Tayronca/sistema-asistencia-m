@@ -109,10 +109,11 @@
                                         </div>
                                               
 
-                                        <span *ngIf="x['lunes']?.Tema"
+                                        <span *ngIf="x['lunes']?.Tema && x['lunes']?.Fecha != temaId && x['lunes']?.Fecha != colorId"
                                             class="tooltip">{{x['lunes']?.Tema}}</span>
-                                        <div>
-                                            <input *ngIf="x['lunes']?.Fecha == temaId" [(ngModel)]="x['lunes'].Tema" (change)="hideTema()">
+                                        <div *ngIf="x['lunes']?.Fecha == temaId">
+                                            <textarea class="desc-tema"  [(ngModel)]="x['lunes'].Tema" (change)="hideTema()"></textarea>
+                                            <button class="btn " (click)="hideTema()">Ok</button>
                                         </div>
 
                                         <div class="colors" *ngIf="x['lunes']?.Fecha == colorId">
@@ -128,17 +129,18 @@
                                             <input (change)="addHourRefMes(numDocente)" *ngIf="x['martes']?.Fecha"  type="number" [class]="x['martes']?.Total  ? 'input-calendar ' +  x['martes']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['martes'].Total ">
                                         </div>
                                         <div>
-                                            <span (click)="addTema(x['martes']?.Fecha)" *ngIf="!x['martes']?.Tema && x['martes']?.Total " class="tema-btn">Add Tema</span>
+                                            <span (click)="addTema(x['martes']?.Fecha)" *ngIf="x['martes']?.Total " class="tema-btn">Add Tema</span>
                                         </div>
                                         <div>
                                             <span *ngIf="x['martes']?.Total " (click)="color(x['martes']?.Fecha)"  class="tema-btn">Color</span>
                                         </div>
                                               
 
-                                        <span *ngIf="x['martes']?.Tema"
+                                        <span *ngIf="x['martes']?.Tema && x['martes']?.Fecha != temaId && x['martes']?.Fecha != colorId"
                                             class="tooltip">{{x['martes']?.Tema}}</span>
-                                        <div>
-                                            <input *ngIf="x['martes']?.Fecha == temaId" [(ngModel)]="x['martes'].Tema" (change)="hideTema()">
+                                        <div *ngIf="x['martes']?.Fecha == temaId">
+                                            <textarea  [(ngModel)]="x['martes'].Tema" (change)="hideTema()" rows="5"></textarea>
+                                            <button class="btn " (click)="hideTema()">Ok</button>
                                         </div>
 
                                         <div class="colors" *ngIf="x['martes']?.Fecha == colorId">
@@ -153,17 +155,18 @@
                                             <input (change)="addHourRefMes(numDocente)" *ngIf="x['miércoles']?.Fecha"  type="number" [class]="x['miércoles']?.Total  ? 'input-calendar ' +  x['miércoles']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['miércoles'].Total ">
                                         </div>
                                         <div>
-                                            <span (click)="addTema(x['miércoles']?.Fecha)" *ngIf="!x['miércoles']?.Tema && x['miércoles']?.Total " class="tema-btn">Add Tema</span>
+                                            <span (click)="addTema(x['miércoles']?.Fecha)" *ngIf="x['miércoles']?.Total " class="tema-btn">Add Tema</span>
                                         </div>
                                         <div>
                                             <span *ngIf="x['miércoles']?.Total " (click)="color(x['miércoles']?.Fecha)"  class="tema-btn">Color</span>
                                         </div>
                                               
 
-                                        <span *ngIf="x['miércoles']?.Tema"
+                                        <span *ngIf="x['miércoles']?.Tema && x['miércoles']?.Fecha != temaId && x['miércoles']?.Fecha != colorId"
                                             class="tooltip">{{x['miércoles']?.Tema}}</span>
-                                        <div>
-                                            <input *ngIf="x['miércoles']?.Fecha == temaId" [(ngModel)]="x['miércoles'].Tema" (change)="hideTema()">
+                                        <div *ngIf="x['miércoles']?.Fecha == temaId">
+                                            <textarea class="desc-tema"  [(ngModel)]="x['miércoles'].Tema" (change)="hideTema()" rows="5">
+                                            <button class="btn " (click)="hideTema()">Ok</button>
                                         </div>
 
                                         <div class="colors" *ngIf="x['miércoles']?.Fecha == colorId">
@@ -178,17 +181,18 @@
                                             <input (change)="addHourRefMes(numDocente)" *ngIf="x['jueves']?.Fecha"  type="number" [class]="x['jueves']?.Total  ? 'input-calendar ' +  x['jueves']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['jueves'].Total ">
                                         </div>
                                         <div>
-                                            <span (click)="addTema(x['jueves']?.Fecha)" *ngIf="!x['jueves']?.Tema && x['jueves']?.Total " class="tema-btn">Add Tema</span>
+                                            <span (click)="addTema(x['jueves']?.Fecha)" *ngIf="x['jueves']?.Total " class="tema-btn">Add Tema</span>
                                         </div>
                                         <div>
                                             <span *ngIf="x['jueves']?.Total " (click)="color(x['jueves']?.Fecha)"  class="tema-btn">Color</span>
                                         </div>
                                               
 
-                                        <span *ngIf="x['jueves']?.Tema"
+                                        <span *ngIf="x['jueves']?.Tema && x['jueves']?.Fecha != temaId && x['jueves']?.Fecha != colorId"
                                             class="tooltip">{{x['jueves']?.Tema}}</span>
-                                        <div>
-                                            <input *ngIf="x['jueves']?.Fecha == temaId" [(ngModel)]="x['jueves'].Tema" (change)="hideTema()">
+                                        <div *ngIf="x['jueves']?.Fecha == temaId" >
+                                            <textarea class="desc-tema" [(ngModel)]="x['jueves'].Tema" (change)="hideTema()" rows="5"></textarea>
+                                            <button class="btn " (click)="hideTema()">Ok</button>
                                         </div>
 
                                         <div class="colors" *ngIf="x['jueves']?.Fecha == colorId">
@@ -203,17 +207,18 @@
                                             <input (change)="addHourRefMes(numDocente)" *ngIf="x['viernes']?.Fecha"  type="number" [class]="x['viernes']?.Total  ? 'input-calendar ' +  x['viernes']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['viernes'].Total ">
                                         </div>
                                         <div>
-                                            <span (click)="addTema(x['viernes']?.Fecha)" *ngIf="!x['viernes']?.Tema && x['viernes']?.Total " class="tema-btn">Add Tema</span>
+                                            <span (click)="addTema(x['viernes']?.Fecha)" *ngIf="x['viernes']?.Total " class="tema-btn">Add Tema</span>
                                         </div>
                                         <div>
                                             <span *ngIf="x['viernes']?.Total " (click)="color(x['viernes']?.Fecha)"  class="tema-btn">Color</span>
                                         </div>
                                               
 
-                                        <span *ngIf="x['viernes']?.Tema"
+                                        <span *ngIf="x['viernes']?.Tema && x['viernes']?.Fecha != temaId && x['viernes']?.Fecha != colorId"
                                             class="tooltip">{{x['viernes']?.Tema}}</span>
-                                        <div>
-                                            <input *ngIf="x['viernes']?.Fecha == temaId" [(ngModel)]="x['viernes'].Tema" (change)="hideTema()">
+                                        <div *ngIf="x['viernes']?.Fecha == temaId">
+                                            <textarea class="desc-tema" [(ngModel)]="x['viernes'].Tema" (change)="hideTema()" rows="5"></textarea>
+                                            <button class="btn " (click)="hideTema()">Ok</button>
                                         </div>
 
                                         <div class="colors" *ngIf="x['viernes']?.Fecha == colorId">
@@ -228,17 +233,18 @@
                                             <input (change)="addHourRefMes(numDocente)" *ngIf="x['sábado']?.Fecha"  type="number" [class]="x['sábado']?.Total  ? 'input-calendar ' +  x['sábado']?.Color : 'input-calendar'" (keypress)="number($event)" [(ngModel)]="x['sábado'].Total ">
                                         </div>
                                         <div>
-                                            <span (click)="addTema(x['sábado']?.Fecha)" *ngIf="!x['sábado']?.Tema && x['sábado']?.Total " class="tema-btn">Add Tema</span>
+                                            <span (click)="addTema(x['sábado']?.Fecha)" *ngIf="x['sábado']?.Total " class="tema-btn">Add Tema</span>
                                         </div>
                                         <div>
                                             <span *ngIf="x['sábado']?.Total " (click)="color(x['sábado']?.Fecha)"  class="tema-btn">Color</span>
                                         </div>
                                               
 
-                                        <span *ngIf="x['sábado']?.Tema"
+                                        <span *ngIf="x['sábado']?.Tema && x['sábado']?.Fecha != temaId && x['sábado']?.Fecha != colorId"
                                             class="tooltip">{{x['sábado']?.Tema}}</span>
-                                        <div>
-                                            <input *ngIf="x['sábado']?.Fecha == temaId" [(ngModel)]="x['sábado'].Tema" (change)="hideTema()">
+                                        <div *ngIf="x['sábado']?.Fecha == temaId">
+                                            <textarea class="desc-tema"  [(ngModel)]="x['sábado'].Tema" (change)="hideTema()" rows="5"></textarea>
+                                            <button class="btn " (click)="hideTema()">Ok</button>
                                         </div>
 
                                         <div class="colors" *ngIf="x['sábado']?.Fecha == colorId">
